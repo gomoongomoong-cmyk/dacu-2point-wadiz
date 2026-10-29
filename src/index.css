@@ -36,7 +36,7 @@
 html { background: #E2DCD4; }
 
 /* 400px로 짠 디자인을 비율 그대로 2.15배 → 가로 860px */
-#root > main, #root > aside { zoom: 2.15; }
+#root > main, #root > aside { zoom: var(--page-zoom, 2.15); }
 body {
   font-family: var(--font-sans);
   color: var(--color-text);
