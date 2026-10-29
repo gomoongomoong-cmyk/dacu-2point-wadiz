@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* 다큐 2-POINT 와디즈 상세 — 아이보리·모카·화이트 */
+@theme {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  --color-ink: #2F2620;
+  --color-text: #3A302A;
+  --color-sub: #6E625A;
+  --color-mute: #7D7168;
+  --color-line: #E8E0D5;
+
+  --color-paper: #FFFFFF;
+  --color-ivory: #F7F2EA;
+  --color-sand: #EFE6DA;
+
+  --color-mocha: #8C6E5C;
+  --color-mocha-d: #6B5245;
+  --color-champagne: #E2D5C6;
+  --color-marker: #EADFD2;
+
+  --color-espresso: #5A463B;
+  --color-espresso-2: #6B5446;
+
+  /* 포인트 색 (스카이블루 취소 → 모카 계열로 통일. 이름은 코드 호환용으로 유지) */
+  --color-sky: #A88B78;
+  --color-sky-l: #F3ECE3;
+  --color-sky-xl: #E2D5C6;
+  --color-sky-d: #6B5245;
+
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+
+  --ease-soft: cubic-bezier(.22, 1, .36, 1);
+}
+
+html { background: #E2DCD4; }
+
+/* 400px로 짠 디자인을 비율 그대로 2.15배 → 가로 860px */
+#root > main, #root > aside { zoom: 2.15; }
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
