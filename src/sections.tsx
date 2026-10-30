@@ -1,5 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion, useTransform } from 'motion/react'
 import type { ReactNode } from 'react'
+import { SKETCHES } from './devnoteSketches'
 import { InfoPill, Blank, BlankFill, CgCap, Logo, Body, Crossfade, DetailTag, EASE, FillText, Heading, Label, Laurel, LightList, Marquee, Note, Reveal, RollNumber, Seal, Section, Serif, Sheen, Slot, Typewriter, Underline, VLine, WordRoll, seg, useLoop } from './ui'
 import { PadSize, RoomView } from './diagrams'
 
@@ -150,6 +152,15 @@ export function NoWay() {
   )
 }
 
+/* 0 첫 화면 — 이벤트보다 먼저, 무슨 제품인지 6초 안에: 다리 아래 패드 클로즈업 → TV 전체가 돌아감 */
+export function TopFilm() {
+  return (
+    <section data-cap="00_첫화면" data-tone="light" className="bg-[#EFE6DA]">
+      <Slot kind="GIF" what="패드 클로즈업에서 TV 전체로 멀어지며 돌아가는 장면" how="3D · 6초 · 720px" code="C14" src="/3d/A2_tv_reveal_top.gif" noTag className="aspect-square" />
+    </section>
+  )
+}
+
 /* 마무리 장면 — 가격 공개 직전, 제품이 놓인 거실을 한 번 더 */
 export function Closing() {
   return (
@@ -159,10 +170,9 @@ export function Closing() {
         <p className="mt-10 text-[32px] font-medium leading-[1.38] tracking-[-0.035em] text-ink">앉은 자리가<br /><b className="font-extrabold">정면이 되는 거실</b>,<br />다큐와 함께 만들어 보세요.</p>
       </div>
       <div className="relative mt-10 aspect-[4/5] w-full">
-        <Slot kind="사진" what="2-POINT를 쓰는 거실 전경" how="자연광 · 소파에서 TV 쪽으로 · TV가 앉은 자리를 향해 살짝 돌아간 상태 · 위쪽은 밝은 벽(모래색 그라데이션과 이어짐)" code="E1" src="/3d/closing_4x5_mocha.png" temp cg capOff className="h-full" />
+        <Slot kind="사진" what="2-POINT를 쓰는 거실 전경" how="자연광 · 소파에서 TV 쪽으로 · TV가 앉은 자리를 향해 살짝 돌아간 상태 · 위쪽은 밝은 벽(모래색 그라데이션과 이어짐)" code="E1" src="/photo/closing_living.jpg" noTag todo="실사로 수정 예정" capOff className="h-full" />
         <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-[40%]" style={{ background: 'linear-gradient(to bottom, rgba(239,230,218,1) 0%, rgba(239,230,218,.85) 30%, rgba(239,230,218,.45) 65%, rgba(239,230,218,0) 100%)' }} />
       </div>
-      <CgCap className="px-6 pb-4" />
     </section>
   )
 }
@@ -223,7 +233,7 @@ export function Offer() {
       </div>
       <Note className="!mt-4">세 리워드의 구성은 같습니다.<br />앞 단계 수량이 모두 펀딩되면 다음 단계 가격으로 바뀝니다.</Note>
       <div className="mt-6 grid grid-cols-2 gap-2 text-left">
-        {[['혜택 01', '기간 제한 없는', '무상 A/S'], ['혜택 02', '오픈 이벤트', '24시간 페이백 · 72시간 커피']].map(([e, b, sub]) => (
+        {[['혜택 01', '기간 제한 없는', '무상 A/S'], ['혜택 02', '오픈 이벤트', '알림신청 커피 · 첫날 페이백']].map(([e, b, sub]) => (
           <div key={e} className="rounded-[8px] bg-paper p-4">
             <em className="text-[12.5px] font-semibold not-italic text-mocha">{e}</em>
             <b className="mt-1 block text-[15.5px] font-bold text-ink">{b}</b>
@@ -246,7 +256,9 @@ export function Problem() {
         </h2>
         <VLine />
         <Body className="!mt-0">수납 거실장 위, 쓰던 자리 그대로.<br />벽도 가구도 손대지 않고 <b>TV 각도만</b> 바꿉니다.</Body>
-        <Slot kind="사진" what="수납이 정돈된 거실장 위 대형 TV" how="거실장 문을 살짝 열어 셋톱박스·책이 보이게 · 사운드바 포함 · 자연광 · 정면 눈높이 · 다리 아래 패드가 살짝 보이게" code="A3" src="/photo/living_front.jpg" noTag bleed className="mt-9 aspect-[4/3]" />
+        <div className="relative mt-9">
+          <Slot kind="사진" what="수납이 정돈된 거실장 위 대형 TV" how="거실장 문을 살짝 열어 셋톱박스·책이 보이게 · 사운드바 포함 · 자연광 · 정면 눈높이 · 다리 아래 패드가 살짝 보이게" code="A3" src="/photo/living_front.jpg" noTag todo="실사 영상으로 수정 예정" bleed className="aspect-[4/3]" />
+        </div>
         <div className="mt-8 flex flex-col gap-2 text-left">
           {[<>공들여 고른 <b>거실장을 바꾸지 않아도</b> 됩니다</>, <>셋톱박스·공유기 <b>선 정리도 그대로</b>입니다</>, <>사운드바와 오브제 <b>자리도 그대로</b>입니다</>].map((t, i) => (
             <div key={i} className="flex items-center gap-3 rounded-[10px] bg-ivory px-5 py-4 text-[16px] text-text [&_b]:font-bold [&_b]:text-ink">{CHECK}<span>{t}</span></div>
@@ -293,7 +305,6 @@ export function BrandWall() {
           </div>
         ))}
       </div>
-      <CgCap className="!mt-8" />
     </section>
   )
 }
@@ -362,7 +373,7 @@ export function Point01() {
   const checks = [['다리마다 패드 하나씩', 'TV의 무게를 두 점에 나눠 받칩니다'], ['바닥의 미끄럼 방지 줄', '거실장을 붙잡아 위의 상판만 움직입니다'], ['TV 자세는 그대로', '높이와 기울기는 바뀌지 않습니다']]
   return (
     <Section cap="10_D01_안정감" tone="dark" align="left">
-      <DetailTag n={1} label="STABILITY" dark />
+      <DetailTag n={2} label="STABILITY" dark />
       <Heading dark lead="하나의 축이 아니라"><Underline>두 개의 점</Underline>으로 받칩니다</Heading>
       <div className="mt-5 border-l border-sky-xl/40 pl-4">
         <Body dark className="!mt-0">두 패드가 TV의 두 다리를 하나씩 받쳐<br />TV는 원래 서 있던 자세 그대로 섭니다.<br /><b>바뀌는 것은 각도뿐입니다.</b></Body>
@@ -394,7 +405,7 @@ export function Grip() {
   ]
   return (
     <Section cap="11_미끄럼방지" tone="sand">
-      <DetailTag n={2} label="GRIP" />
+      <DetailTag n={3} label="GRIP" />
       <Heading lead="밀어도 밀리지 않도록"><Underline>거실장을 붙잡는</Underline><br />하판 바닥</Heading>
       <Body>하판 바닥 홈에 미끄럼 방지 줄을 끼웠습니다.<br />TV를 밀어도 하판은 거실장 위에 그대로 있고<br /><b>움직이는 건 위의 상판뿐</b>입니다.</Body>
       <div className="relative -mx-6 mt-9">
@@ -408,7 +419,7 @@ export function Grip() {
           <div key={i} className="flex items-center gap-3 rounded-[10px] bg-paper px-5 py-4 text-[16px] text-text [&_b]:font-bold [&_b]:text-ink">{CHECK}<span>{c}</span></div>
         ))}
       </div>
-      <Slot kind="사진" what="하판 바닥 미끄럼 방지 줄" how="하판을 뒤집어 바닥의 줄이 보이게 · 사선 조명으로 질감 · 줄 끝부분까지" code="B2" round className="mt-8 aspect-[16/9]" />
+      <Slot kind="사진" what="하판 바닥 미끄럼 방지 줄" how="하판을 뒤집어 바닥의 줄이 보이게 · 사선 조명으로 질감 · 줄 끝부분까지" code="B2" src="/3d/bottom_strip_macro.jpg" noTag todo="실사로 수정 예정" round className="mt-8 aspect-[16/9]" />
       <Note>평평한 거실장 위에서 사용해 주세요.</Note>
     </Section>
   )
@@ -431,7 +442,7 @@ export function Point02() {
   const parts = [['상판', 'TV 다리를 받치는 판', '/3d/part_upper.jpg'], ['하판', '곡선 홈이 난 판', '/3d/part_lower.jpg'], ['연결 핀', '두 판을 잇는 축', '/3d/part_pin.jpg']]
   return (
     <Section cap="12_D02_원" tone="sky" cg>
-      <DetailTag n={3} label="PRINCIPLE" />
+      <DetailTag n={1} label="PRINCIPLE" />
       <Heading lead="밀려나지 않고 그 자리에서">두 패드의 홈은<br /><BlankFill text="같은 원" /> 위에 있습니다</Heading>
       <Body>두 패드의 홈은 TV 가운데를 중심으로 한<br />하나의 원에서 나왔습니다.<br />그래서 TV를 밀면 <b>방향만</b> 바뀝니다.</Body>
       {/* 위에서 본 3D 위에 같은 원을 그려 둠 — 원의 중심 = TV 가운데, 두 핀이 이 원 위를 지남 */}
@@ -465,7 +476,6 @@ export function Point02() {
       </div>
       <p className="mt-4 text-[13.5px] text-sub">세 가지가 맞물려 패드 하나가 되고, 패드 두 개가 한 세트입니다.</p>
       <InfoPill>이 구조는 디자인 출원으로 보호받습니다 · 30-2026-0034869</InfoPill>
-      <Slot kind="사진" what="부품 6개 탑뷰" how="흰 배경 · 상판 2 · 하판 2 · 핀 2를 일정한 간격으로 · 수직 부감 · 그림자 최소" code="B1" src="/3d/kit_03_top.jpg" noTag cg bleed className="mt-8 aspect-[4/3]" />
     </Section>
   )
 }
@@ -473,8 +483,8 @@ export function Point02() {
 /* Detail 03 — 몇 도의 차이 */
 export function Point03() {
   return (
-    <Section cap="13_D03_각도">
-      <DetailTag n={4} label="EVERYDAY" />
+    <Section cap="13_D03_각도" tone="sand">
+      <DetailTag n={5} label="EVERYDAY" />
       <Heading lead="앉은 자리에 맞춰 조금만">그 몇 도가<br /><FillText>거실의 하루</FillText>를 바꿉니다</Heading>
       <Body>소파 끝자리에서도 고개를 돌리지 않고,<br />오후 햇빛이 비칠 때는 살짝 비켜 둡니다.</Body>
       <Fig caption="위에서 본 거실 · 앉는 자리에 따라 화면을 맞춥니다"><RoomView /></Fig>
@@ -498,7 +508,7 @@ export function Point03() {
           ))}
         </div>
         <div className="overflow-hidden rounded-[10px] bg-paper shadow-[0_8px_24px_rgba(42,36,34,.08)] ring-1 ring-mocha/30">
-          <p className="bg-espresso py-3 text-[15px] font-semibold text-white">2-POINT는</p>
+          <p className="bg-espresso py-3 text-[15px] font-semibold text-white">턴패드는</p>
           {/* 글자는 그대로, '끝' 원만 맥박처럼 두 번 뛰고 쉼 (1.6초 반복) */}
           <div className="flex h-[calc(100%-44px)] flex-col items-center justify-center gap-1 px-3 py-6">
             <p className="text-[16px] font-bold leading-[1.5] text-ink">손끝으로<br />밀면</p>
@@ -536,7 +546,8 @@ export function Spaces() {
     <Section cap="13b_공간" tone="dark">
       <Serif dark>Beyond the living room</Serif>
       <div className="mt-3"><Heading dark lead="집 밖에서도">큰 화면이 있는 곳이라면<br /><b>어디든</b></Heading></div>
-      <Body dark>벽에 구멍을 낼 수 없는 공간,<br />자리 배치가 자주 바뀌는 공간일수록<br /><b>2-POINT</b>가 편합니다.</Body>
+      <Body dark>벽에 구멍을 낼 수 없는 공간,<br />자리 배치가 자주 바뀌는 공간일수록<br /><b>턴패드</b>가 편합니다.</Body>
+      <Slot kind="사진" what="회의실·사무실 탁자 위에서 돌린 TV" how="사무실 · 탁자 위 대형 TV · 다리 아래 패드" code="F1" src="/photo/space_office.jpg" noTag todo="실사로 수정 예정" round className="mt-9 aspect-square" />
       <div className="mt-10 grid grid-cols-2 gap-2 text-left">
         {rows.map(([k, t, d]) => (
           <div key={k} className="rounded-[10px] bg-white/[.06] px-4 pb-5 pt-4">
@@ -575,12 +586,12 @@ export function Point04() {
   ]
   return (
     <Section cap="14_D04_소재" tone="ivory">
-      <DetailTag n={5} label="MATERIAL" />
-      <Heading lead="식품에 닿는 곳에도 쓰이는">두 가지 소재로 <b>만들었습니다</b></Heading>
+      <DetailTag n={4} label="MATERIAL" />
+      <Heading lead="식품이 닿는 곳에도 쓰이는">두 가지 소재로 <b>만들었습니다</b></Heading>
 
       {/* 소재 카드: 사진 위에 아이콘 원이 걸쳐 있는 구성 */}
       <div className="mt-9 overflow-hidden rounded-[10px] bg-paper text-center shadow-[0_8px_24px_rgba(42,36,34,.05)]">
-        <Slot kind="사진" what="상판·하판 표면 결 클로즈업" how="두 판이 맞닿은 단면 · 사선 조명으로 질감 · 매크로 · 인조가죽 마감 면과 판 단면이 함께 보이게" code="B3" src="/3d/macro_03_mocha_corner.png" noTag cg capOff className="aspect-[4/3]" />
+        <Slot kind="사진" what="상판·하판 표면 결 클로즈업" how="두 판이 맞닿은 단면 · 사선 조명으로 질감 · 매크로 · 인조가죽 마감 면과 판 단면이 함께 보이게" code="B3" src="/3d/M1_mat_corner.gif" noTag capOff className="aspect-[4/3]" />
         <div className="relative px-5 pb-7 pt-12">
           <span className="absolute left-1/2 top-0 flex size-[62px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-paper shadow-[0_0_0_6px_rgba(247,242,234,.9)]">
             <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="#6B5245" strokeWidth="1.6" strokeLinejoin="round"><path d="M12 3 2.5 8 12 13l9.5-5z" /><path d="m2.5 12.5 9.5 5 9.5-5" /><path d="m2.5 16.5 9.5 5 9.5-5" opacity=".45" /></svg>
@@ -663,47 +674,11 @@ export function Recommend() {
   )
 }
 
-/* 옆에서 본 패드 끝부분 — 1mm = 4px (REV07: 상판 10mm · 하판 5mm · 합 15mm). 왼쪽은 흐리게 이어지는 것처럼 */
-function ThicknessFig() {
-  const T = 'font-[Poppins,Pretendard]'
-  return (
-    <svg viewBox="0 96 860 264" className="w-full" role="img" aria-label="옆에서 본 패드 두께: 상판 10mm, 하판 5mm, 합쳐서 15mm">
-      <defs>
-        <linearGradient id="thkFade" x1="0" x2="1"><stop offset="0" stopColor="#F7F2EA" /><stop offset="1" stopColor="#F7F2EA" stopOpacity="0" /></linearGradient>
-        <linearGradient id="thkWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#C2A58E" /><stop offset="1" stopColor="#A88B78" /></linearGradient>
-      </defs>
-      {/* 거실장 윗면 */}
-      <rect x="0" y="262" width="860" height="98" fill="url(#thkWood)" />
-      <rect x="0" y="262" width="860" height="2" fill="#9A7C68" opacity=".5" />
-      {/* 하판 5mm (20px) · 상판 10mm (40px) — 상판 위 인조가죽 */}
-      <rect x="-10" y="242" width="690" height="20" rx="4" fill="#F1EBE3" stroke="#D9CEC1" strokeWidth="1.5" />
-      <rect x="-10" y="202" width="420" height="40" rx="5" fill="#FAF6F0" stroke="#D9CEC1" strokeWidth="1.5" />
-      <rect x="-10" y="202" width="420" height="5" rx="2.5" fill="#8C6E5C" />
-      {/* TV 다리 */}
-      <path d="M178 104 L196 196" stroke="#2F2620" strokeWidth="13" strokeLinecap="round" />
-      <rect x="150" y="192" width="100" height="10" rx="3" fill="#2F2620" />
-      <rect x="0" y="0" width="150" height="262" fill="url(#thkFade)" />
-      {/* 치수: 상판 10 · 하판 5 · 합 15 */}
-      <g stroke="#6B5245" strokeWidth="1.5" strokeDasharray="4 5" opacity=".5">
-        <path d="M418 202H800M688 262H800" />
-      </g>
-      <g stroke="#6B5245" strokeWidth="2.5" strokeLinecap="round">
-        <path d="M440 205V239M434 205H446M434 239H446" />
-        <path d="M700 245V259M694 245H706M694 259H706" />
-        <path d="M790 205V259M784 205H796M784 259H796" />
-      </g>
-      <text x="456" y="231" className={T} fontSize="26" fontWeight="600" fill="#2F2620">상판 10mm</text>
-      <text x="690" y="304" textAnchor="end" className={T} fontSize="22" fontWeight="600" fill="#FFFFFF">하판 5mm</text>
-            <text x="790" y="186" textAnchor="middle" className={T} fontSize="24" fontWeight="700" fill="#6B5245">합 15mm</text>
-    </svg>
-  )
-}
-
 /* Detail 05 — 설치 */
 export function Point05() {
   const steps = [['1', '패드 놓기', 'TV 다리 간격에\n맞춰 놓기'], ['2', 'TV 올리기', '두 다리를\n패드 위에'], ['3', '돌리기', '손끝으로\n살짝 밀기']]
   return (
-    <Section cap="17_D05_설치" cg>
+    <Section cap="17_D05_설치">
       <DetailTag n={6} label="SETUP" />
       <Heading lead="공구도, 벽 공사도 없이">놓고, 올리면 <Underline>설치 끝</Underline></Heading>
       <div className="relative mt-9 grid grid-cols-3 gap-1.5">
@@ -728,7 +703,7 @@ export function Point05() {
       <div className="mt-9 grid grid-cols-2 gap-2 text-left">
         {([['/3d/V1_assembly.gif', 'C7', '핀을 끼워 맞물리기', '상판·연결 핀·하판이 하나로'], ['/photo/ai_pad_place.gif', 'A7-1', 'TV 다리 아래 놓기', '두 다리 간격에 맞춰 하나씩']] as const).map(([src, code, t, sub], i) => (
           <figure key={code}>
-            <Slot kind="GIF" what={t} how={sub} code={code} src={src} noTag compact round className="aspect-square" />
+            <Slot kind="GIF" what={t} how={sub} code={code} src={src} noTag todo={code === 'A7-1' ? '실사 영상으로 수정 예정' : undefined} compact round className="aspect-square" />
             <figcaption className="mt-3 flex gap-2">
               <span className="mt-[2px] flex size-[18px] shrink-0 items-center justify-center rounded-full bg-mocha-d text-[11px] font-semibold text-white">{i + 1}</span>
               <span><b className="block text-[15px] font-bold text-ink">{t}</b><span className="mt-0.5 block text-[12.5px] text-sub">{sub}</span></span>
@@ -742,7 +717,16 @@ export function Point05() {
           <span className="font-serif text-[16px] italic text-mute">Low profile</span>
         </div>
         <p className="mt-4 text-[56px] font-extrabold leading-none tracking-[-0.04em] text-mocha-d">15<span className="ml-1 text-[25.5px] font-bold">mm</span></p>
-        <figure className="mt-5 overflow-hidden rounded-[10px] bg-ivory"><ThicknessFig /></figure>
+        <div className="mt-5 flex flex-col gap-1.5">
+          <div className="relative">
+            <Slot kind="사진" what="하판 모서리 클로즈업" how="3D · 판 두께와 둥근 모서리가 보이게" code="C3" src="/3d/thk_corner.jpg" noTag round className="aspect-[4/3]" />
+            <span className="absolute bottom-2 left-2 z-20 rounded-full bg-espresso/80 px-2.5 py-1 text-[11.5px] font-semibold text-white backdrop-blur-sm">하판 모서리 · 5mm</span>
+          </div>
+          <div className="relative">
+            <Slot kind="사진" what="옆에서 본 하판" how="3D · 눈높이 측면" code="C3-2" src="/3d/thk_profile.jpg" noTag round className="aspect-[5/1]" />
+            <span className="absolute bottom-2 left-2 z-20 rounded-full bg-espresso/80 px-2.5 py-1 text-[11.5px] font-semibold text-white backdrop-blur-sm">옆에서 본 하판</span>
+          </div>
+        </div>
         <p className="mt-4 text-[15px] leading-[1.75] text-sub">상판 10mm와 하판 5mm를 합친 두께입니다.<br />TV는 그만큼만 높아지고<br /><b className="font-semibold text-ink">사운드바·선 정리는 그대로</b>입니다.</p>
       </div>
       <ul className="mt-6 border-t border-line pt-4 text-left">
@@ -795,11 +779,13 @@ export function Fit() {
 export function Colors() {
   const cs = [['화이트', '#FFFFFF', '밝은 거실장 위'], ['아이보리', '#F3EDE3', '밝은 거실장 위'], ['모카', '#8A6A52', '원목 거실장 위']]
   return (
-    <Section cap="19_색상" tone="ivory" cg>
+    <Section cap="19_색상" tone="ivory">
       <Serif>Three colors, one living room</Serif>
       <div className="mt-3"><Heading lead="거실장 색에 맞춰"><b className="text-mocha">세 가지</b> 컬러</Heading></div>
       <Body>세 가지 모두 <b>가죽 질감의 시트</b>로 마감했습니다.</Body>
-      <div className="mt-8 grid grid-cols-3">
+      {/* 위에서 본 세 색 패드 — 아래 색 이름과 같은 열에 놓임 */}
+      <Slot kind="사진" what="세 가지 색 패드를 위에서" how="3D · 화이트 · 아이보리 · 모카 나란히" code="C11-2" src="/3d/color_trio_top.jpg" noTag round className="mt-8 aspect-square" />
+      <div className="mt-4 grid grid-cols-3">
         {cs.map(([n, c], i) => (
           <p key={n} className="flex items-center justify-center gap-2 text-[15px] font-semibold">
             <motion.i className="size-4 rounded-full border border-[#D5CEC4]" style={{ background: c }}
@@ -812,13 +798,30 @@ export function Colors() {
   )
 }
 
+/* 개발 노트 손그림 — 화면에 들어오면 펜으로 그리듯 선이 그려지고 3.2초마다 반복 (about 페이지 스케치) */
+function Sketch({ n }: { n: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [on, setOn] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    // 선 순서(--i)의 최댓값을 --n 으로 둬서, 그림마다 그려지는 시간이 같게(약 1.1초 안에 다 시작)
+    const max = Math.max(1, ...[...el.querySelectorAll<SVGElement>('[style*="--i"]')].map(x => Number(x.style.getPropertyValue('--i')) || 0))
+    el.style.setProperty('--n', String(max))
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setOn(true); io.disconnect() } }, { threshold: 0.35 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  return <div ref={ref} className={`dn-sk ${on ? 'on' : ''}`} dangerouslySetInnerHTML={{ __html: SKETCHES[n] }} />
+}
+
 /* 믿을 수 있는 다큐 — 개발 노트 (turnpad/docs/about-copy.md 4번 + 대표 인터뷰로 1단계 보완) */
 export function Trust() {
   const steps: [string, ReactNode, string][] = [
     ['고민의 시작', <>시작은 거실장 위의 대형 TV였습니다.<br />앉는 자리가 바뀔 때마다<br />들어 옮기지 않고 <b>방향만 바꾸고</b> 싶었습니다.</>, '/devnote/01-sketch.svg'],
     ['베어링 없는 구조', <><b>고장 나는 부품을 아예 빼기로</b> 했습니다.<br />판과 판이 맞닿아 미끄러지며 도는 구조를 정하고,<br />그 위에서 <b>오래 버틸 소재</b>를 찾았습니다.</>, '/devnote/02-structure.svg'],
     ['열 번이 넘는 도면 수정', <>구조시험 전문가인 대표가 직접<br /><b>도면을 열 번 넘게</b> 고쳤습니다.<br />무거운 TV를 받치면서도<br /><b>손끝으로 돌아가는</b> 마찰력을 찾는 과정이었습니다.</>, '/devnote/03-drawing.svg'],
-    ['스무 번이 넘는 시제품', <>판마다 CNC로 깎아<br /><b>시제품을 스무 번 넘게</b> 새로 만들었습니다.<br />올리고 돌리는 테스트를 셀 수 없이 반복해<br />지금의 2-POINT가 나왔습니다.</>, '/devnote/04-assembly.svg'],
+    ['스무 번이 넘는 시제품', <>판마다 CNC로 깎아<br /><b>시제품을 스무 번 넘게</b> 새로 만들었습니다.<br />올리고 돌리는 테스트를 셀 수 없이 반복해<br />지금의 턴패드가 나왔습니다.</>, '/devnote/04-assembly.svg'],
   ]
   return (
     <Section cap="16_신뢰" tone="sand">
@@ -826,13 +829,13 @@ export function Trust() {
       <div className="mt-3"><Heading lead="작은 불편 하나에서">매일 쓰는 물건이<br /><b className="text-mocha">되기까지</b></Heading></div>
       <Body>다큐는 구조시험 전문기업 STN을 이끌어 온<br />대표가 만든 생활 브랜드입니다.</Body>
       <div className="mt-10 text-left">
-        {steps.map(([t, body, img], i) => (
+        {steps.map(([t, body], i) => (
           <div key={t} className={`relative pb-10 pl-9 ${i < steps.length - 1 ? 'before:absolute before:bottom-0 before:left-[11px] before:top-7 before:w-px before:bg-line' : ''}`}>
             <span className="absolute left-0 top-0 flex size-[23px] items-center justify-center rounded-full bg-mocha-d text-[12px] font-bold text-white">{String(i + 1).padStart(2, '0')}</span>
             <p className="text-[18px] font-bold leading-[1.4] text-ink">{t}</p>
             <p className="mt-2 text-[14px] leading-[1.75] text-sub [&_b]:font-bold [&_b]:text-ink">{body}</p>
-            <div className="mt-4 rounded-[8px] bg-paper px-4 py-4 shadow-[0_6px_18px_rgba(42,36,34,.05)]">
-              <img src={img} alt={`${t} 손그림`} className="mx-auto max-h-[190px] w-auto" />
+            <div className="mt-4 rounded-[8px] bg-paper px-3 py-3 shadow-[0_6px_18px_rgba(42,36,34,.05)]">
+              <Sketch n={i} />
             </div>
           </div>
         ))}
@@ -877,7 +880,7 @@ export function Reviews() {
       <div className="mt-3 flex flex-col gap-2 text-left">
         {[1, 2, 3].map(n => (
           <div key={n} className="grid grid-cols-[118px_1fr] overflow-hidden rounded-[8px] bg-paper">
-            <Slot kind="사진" what={`체험단 거실 ${n}`} how="체험단이 보낸 실제 거실 사진 · 11/13 후기 마감 후" compact className="min-h-[140px]" />
+            <Slot kind="사진" what={`체험단 거실 ${n}`} how="체험단이 보낸 실제 거실 사진 · 11/13 후기 마감 후" todo="후기 사진 예정" compact className="min-h-[140px]" />
             <div className="p-4">
               <p className="text-right text-[12px] tracking-[2px] text-sky">★★★★★</p>
               <h4 className="mt-1 text-[16px] font-bold text-ink">[후기 핵심 한 줄]</h4>
@@ -900,7 +903,7 @@ export function Maker() {
     ['이 소재(PTFE·UHMWPE)를 고른 이유는요?', <>공학적인 기본 원리를 이용하여<br />턴패드의 사용에 가장 적합한<br />재료 조합이라고 판단했습니다.<br />즉 너무 미끄럽지도 않고 너무 거칠지도 않으면서<br />합리적인 가격을 제공할 수 있는<br />소재의 조합이라는 결론에 도달한 것입니다.</>],
     ['다큐(Daily And Constant Utility)라는 이름에 담고 싶었던 마음은요?', <>우리 생활 속의 실속형 디자인(도구)을 담고 있습니다.<br />본 턴패드 제품도 역시 우리 생활 속의 제품이며,<br />주방의 도마 소재로도 사용되는<br />플라스틱 재료로 제작되었습니다.</>],
     ['이 제품을 어떤 집, 어떤 사람이 썼으면 좋겠나요?', <>이 제품을 보는 순간 “이거다”라고 느끼는<br />소비자분들이 많을 것이라 생각합니다.<br />즉 무엇보다 실용적인 제품이며<br />현재 고정형 TV의 품격을 업그레이드시켜줄 것입니다.<br />이로써 답을 대신하고자 합니다.</>],
-    ['와디즈에서 처음 선보이는 이유는 무엇인가요?', <>와디즈는 새로운 생각을 먼저 알아보고<br />응원해 주시는 분들이 모이는 곳이라고 생각합니다.<br />오랜 시간 공들여 다듬은 2-POINT를<br />그런 분들께 가장 먼저 보여드리고 싶었습니다.<br />서포터분들의 이야기에 귀 기울여<br />더 오래 곁에 두실 수 있는 제품으로 만들어 가겠습니다.</>],
+    ['와디즈에서 처음 선보이는 이유는 무엇인가요?', <>와디즈는 새로운 생각을 먼저 알아보고<br />응원해 주시는 분들이 모이는 곳이라고 생각합니다.<br />오랜 시간 공들여 다듬은 턴패드를<br />그런 분들께 가장 먼저 보여드리고 싶었습니다.<br />서포터분들의 이야기에 귀 기울여<br />더 오래 곁에 두실 수 있는 제품으로 만들어 가겠습니다.</>],
   ]
   return (
     <Section cap="22_메이커">
@@ -998,7 +1001,6 @@ export function Spec() {
       {table(policy)}
       <p className="mt-10 text-[13px] leading-[1.7] text-white/50">턴패드는 특허청에 상표 출원 중입니다 (40-2026-0191706).<br />상표와 콘텐츠를 허락 없이 쓰면 관련 법에 따라 처벌받을 수 있습니다.</p>
       <div className="mt-12 text-center"><Logo className="h-[20px] text-white/80" /><p className="mt-2 font-serif text-[13px] italic text-white/45">Daily And Constant Utility</p></div>
-      <CgCap className="!mt-8" />
     </section>
   )
 }

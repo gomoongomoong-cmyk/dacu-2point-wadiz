@@ -45,8 +45,8 @@ export function Section({ cap, tone = 'white', align = 'center', cg = false, cla
 export function Heading({ lead, children, dark = false, size = 'md' }: { lead?: ReactNode; children: ReactNode; dark?: boolean; size?: 'md' | 'lg' }) {
   return (
     <>
-      {lead && <p className={`text-[19px] leading-[1.5] font-medium ${dark ? 'text-white/70' : 'text-sub'}`}>{lead}</p>}
-      <h2 className={`mt-3 font-medium tracking-[-0.035em] [&_b]:font-extrabold ${size === 'lg' ? 'text-[37px] leading-[1.32]' : 'text-[33px] leading-[1.36]'} ${dark ? 'text-white' : 'text-ink'}`}>
+      {lead && <p className={`text-[19px] leading-[1.4] font-medium ${dark ? 'text-white/70' : 'text-sub'}`}>{lead}</p>}
+      <h2 className={`mt-1 font-medium tracking-[-0.035em] [&_b]:font-extrabold ${size === 'lg' ? 'text-[37px] leading-[1.32]' : 'text-[33px] leading-[1.36]'} ${dark ? 'text-white' : 'text-ink'}`}>
         {children}
       </h2>
     </>
@@ -333,8 +333,13 @@ export function CgCap({ className = '' }: { className?: string }) {
   return <p className={`mt-1.5 text-right text-[8.5px] leading-none text-mute/50 [[data-tone=dark]_&]:text-white/25 ${className}`}>이해를 돕기 위한 3D 그래픽입니다</p>
 }
 
+/** 실사로 바꿀 자리 표시 — 오른쪽 위 점선 알약 (todo 문구가 없으면 '수정 예정') */
+function TodoBadge({ text }: { text: string }) {
+  return <span className="absolute right-3 top-3 z-20 rounded-full border border-dashed border-mocha-d bg-paper/90 px-2.5 py-[3px] text-[11px] font-bold text-mocha-d">{text}</span>
+}
+
 /** cg: 3D 렌더 → 아래에 규정 문구(capOff면 부모가 직접 배치). contain: 배경 없는 PNG를 여백 두고 가운데에. bare: 바탕 없이 누끼만 */
-export function Slot({ kind, what, how, code, src, cg = false, capOff = false, contain = false, bare = false, noTag = false, temp = false, className = '', compact = false, bleed = false, round = false }: { kind: SlotKind; what: string; how?: string; code?: string; src?: string; cg?: boolean; capOff?: boolean; contain?: boolean; bare?: boolean; noTag?: boolean; temp?: boolean; className?: string; compact?: boolean; bleed?: boolean; round?: boolean }) {
+export function Slot({ kind, what, how, code, src, cg = false, capOff = false, contain = false, bare = false, noTag = false, temp = false, todo, className = '', compact = false, bleed = false, round = false }: { kind: SlotKind; what: string; how?: string; code?: string; src?: string; cg?: boolean; capOff?: boolean; contain?: boolean; bare?: boolean; noTag?: boolean; temp?: boolean; todo?: string; className?: string; compact?: boolean; bleed?: boolean; round?: boolean }) {
   const tag = `${kind}|${what}|${code ?? ''}|${how ?? ''}`
   const no = imgNo(useContext(SlotNo)[tag])
   const box = `${bleed ? '-mx-6 w-[calc(100%+48px)]' : 'w-full'} ${round ? 'rounded-[6px]' : ''} ${className}`
@@ -343,7 +348,7 @@ export function Slot({ kind, what, how, code, src, cg = false, capOff = false, c
       <img src={src} alt={what} className={`absolute inset-0 size-full ${bare ? 'object-contain' : contain ? `object-contain ${compact ? 'p-2' : 'p-6'}` : 'object-cover'} ${temp ? 'opacity-45 grayscale-[35%]' : ''}`} />
       {no && !noTag && <span className="absolute left-3 top-3 z-20 rounded-full bg-mocha-d/85 px-2 py-[2px] text-[10.5px] font-bold text-white">{no}</span>}
       {/* temp: 임시로 넣어 둔 이미지 → 연하게 + 표시 (나중에 바꿀 것) */}
-      {temp && <span className="absolute right-3 top-3 z-20 rounded-full border border-dashed border-mocha-d bg-paper/90 px-2 py-[2px] text-[10.5px] font-bold text-mocha-d">수정 예정</span>}
+      {(temp || todo) && <TodoBadge text={todo ?? '수정 예정'} />}
     </div>
     {/* 작은 칸(compact)은 칸마다 달지 않고, 묶음 아래에 부모가 한 줄로 */}
   </>)
@@ -353,6 +358,7 @@ export function Slot({ kind, what, how, code, src, cg = false, capOff = false, c
       className={`relative flex flex-col items-center justify-center overflow-hidden text-center
         bg-[linear-gradient(155deg,#F4EEE6,#E9DFD3)] [[data-tone=dark]_&]:bg-[linear-gradient(155deg,#6A5548,#5E4A3E)]
         ${compact ? 'gap-1.5 px-2 py-8' : 'gap-2.5 px-7 py-12'} ${box}`}>
+      <TodoBadge text={todo ?? '실사 촬영 예정'} />
       {no && <span className={`rounded-full bg-mocha-d font-bold tracking-[.02em] text-white ${compact ? 'px-2.5 py-[3px] text-[12px]' : 'px-3.5 py-1 text-[14px]'}`}>{no}</span>}
       <span className={`font-semibold text-mocha [[data-tone=dark]_&]:text-sky-xl ${compact ? 'text-[10.5px]' : 'text-[12.5px]'}`}>실사 {kind}{code ? ` · ${code}` : ''}</span>
       <span className={`${compact ? 'text-[12.5px]' : 'text-[15px]'} font-bold leading-[1.45] text-ink/80 [[data-tone=dark]_&]:text-white/85`}>{what}</span>

@@ -48,3 +48,30 @@ body {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* 개발 노트 손그림 (turnpad about 위젯 .ab-sk 스타일 그대로) */
+.ab-sk { display: block; width: 100%; height: auto; }
+.ab-sk path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.ab-sk .m { stroke: #6E6259; stroke-width: 1.6; }
+.ab-sk .g { stroke-width: .8; opacity: .55; }
+.ab-sk .c { stroke: #C9C0B7; stroke-width: .9; }
+.ab-sk .d { stroke: #6E6259; stroke-width: 1; }
+.ab-sk .a { stroke: #8C6E5C; stroke-width: 2; }
+.ab-sk .x { stroke: #9A8C80; stroke-width: 1.6; }
+.ab-sk .t { fill: #6E6259; }
+.ab-sk .t.em { fill: #8C6E5C; }
+.ab-sk .t.s { fill: #9A8C80; }
+.ab-sk .t.x { fill: #B3A79C; }
+.ab-sk .pen { font-family: "Nanum Pen Script", cursive; letter-spacing: 0; }
+.ab-sk .en { font-family: "Caveat", "Nanum Pen Script", cursive; letter-spacing: 0; }
+/* 3.2초 반복: 선이 순서대로 그려지고(약 1.7초) → 다 그려진 채 잠깐 머묾 → 옅어지고 다시 */
+.dn-sk .ab-sk path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.dn-sk .ab-sk text { opacity: 0; }
+.dn-sk.on .ab-sk path { animation: sk-draw 3.2s ease-in-out calc(var(--i) / var(--n, 100) * 1.1s) infinite; }
+.dn-sk.on .ab-sk text { animation: sk-text 3.2s ease calc(var(--i) / var(--n, 100) * 1.1s) infinite; }
+@keyframes sk-draw { 0% { stroke-dashoffset: 1; opacity: 1; } 18% { stroke-dashoffset: 0; } 86% { stroke-dashoffset: 0; opacity: 1; } 96% { opacity: 0; } 100% { stroke-dashoffset: 1; opacity: 0; } }
+@keyframes sk-text { 0%, 12% { opacity: 0; } 24%, 86% { opacity: 1; } 96%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .dn-sk .ab-sk path, .dn-sk.on .ab-sk path { stroke-dashoffset: 0; animation: none; }
+  .dn-sk .ab-sk text, .dn-sk.on .ab-sk text { opacity: 1; animation: none; }
+}
