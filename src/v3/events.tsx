@@ -89,21 +89,32 @@ const COFFEE: Ev = {
   ],
 }
 
-/* 체험단 아이콘: 패드 둘 위에서 TV가 좌우로 크게 돌아감 (3초 한 바퀴, 페이지 시계) · 돌 때마다 패드가 밝게 빛남 */
+/* 체험단 아이콘: 고정된 TV 아래 패드 둘이 3초마다 반짝 (빛이 번지듯 밝아졌다 돌아옴, 왼쪽 → 오른쪽 차례로) */
 function TvTurn() {
   const p = useLoop(3)
-  const turn = useTransform(p, v => 34 * Math.sin(2 * Math.PI * v))
-  const glow = useTransform(turn, a => Math.abs(a) / 34)
+  const flash = (d: number) => useTransform(p, v => { const t = (v - d + 1) % 1; return t < 0.18 ? Math.sin((t / 0.18) * Math.PI) : 0 })
+  const glows = [flash(0.08), flash(0.22)]
   return (
     <div className="mr-1 mt-2 w-[118px]">
-      <motion.svg viewBox="0 0 48 40" className="block w-full" style={{ transformPerspective: 260, rotateY: turn }}>
+      <svg viewBox="0 0 48 40" className="block w-full overflow-visible">
+        <defs>
+          <radialGradient id="padGlow"><stop offset="0" stopColor="#FFE2B0" stopOpacity="1" /><stop offset=".45" stopColor="#FFE9C7" stopOpacity=".7" /><stop offset="1" stopColor="#FFF3E0" stopOpacity="0" /></radialGradient>
+        </defs>
         <rect x="3" y="2" width="42" height="25" rx="2.5" fill="#6B5245" />
         <rect x="5.5" y="4.5" width="37" height="20" rx="1" fill="#8C6E5C" />
         <path d="M8 6.5l9 0-11 13z" fill="#fff" opacity=".18" />
         <path d="M13 27l-2.4 6.5M35 27l2.4 6.5" stroke="#5A463B" strokeWidth="2.2" strokeLinecap="round" />
-        {[5, 33].map(x => <rect key={x} x={x} y="34.5" width="10" height="3.6" rx="1.3" fill="#C9AE98" />)}
-        {[5, 33].map(x => <motion.rect key={`g${x}`} x={x} y="34.5" width="10" height="3.6" rx="1.3" fill="#6B5245" style={{ opacity: glow }} />)}
-      </motion.svg>
+        {[5, 33].map((x, i) => (
+          <g key={x}>
+            <motion.ellipse cx={x + 5} cy="36.3" rx="15" ry="7.5" fill="url(#padGlow)" style={{ opacity: glows[i] }} />
+            <rect x={x} y="34.5" width="10" height="3.6" rx="1.3" fill="#8C6E5C" />
+            <motion.rect x={x} y="34.5" width="10" height="3.6" rx="1.3" fill="#FFFFFF" style={{ opacity: glows[i] }} />
+            {/* 반짝이 별: 패드 위쪽 바깥에서 커졌다 사라짐 */}
+            <motion.path d="M0 -3.2 L0.9 -0.9 L3.2 0 L0.9 0.9 L0 3.2 L-0.9 0.9 L-3.2 0 L-0.9 -0.9 Z" fill="#E8B96A"
+              style={{ x: x + (i ? 11.5 : -1.5), y: 31.5, scale: glows[i], opacity: glows[i] }} />
+          </g>
+        ))}
+      </svg>
     </div>
   )
 }

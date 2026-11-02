@@ -194,11 +194,11 @@ def capture_piece(cap, y0, y1, name):
     pg.evaluate(f"window.scrollTo(0, document.querySelector('[data-cap=\"{cap}\"]').getBoundingClientRect().top + scrollY + {y0})")
     settle(pg, 2500)
     gifs = pg.evaluate(HIDE_JS, [cap, y0, y1]); pg.evaluate(SHOW_JS)
-    # 움직이는 것이 있는지: 1.5초 동안 0.25초마다 비교
+    # 움직이는 것이 있는지: 한 박자(3초) 동안 0.25초마다 비교 (짧게 반짝이는 효과도 놓치지 않게)
     base = shot(pg, h); moving = bool(gifs)
     t_cut, b_cut = edge_trim(base)  # 끝 줄 잘라낼 수
     crop = lambda im: im[t_cut:im.shape[0] - b_cut]
-    for _ in range(6):
+    for _ in range(12):
         if moving: break
         tick(pg, 250); pg.wait_for_timeout(15)
         moving = np.abs(shot(pg, h).astype(np.int16) - base).max() > 14
