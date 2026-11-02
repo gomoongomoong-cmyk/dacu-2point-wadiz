@@ -8,15 +8,15 @@ function IconDisc({ dark, children }: { dark?: boolean; children: ReactNode }) {
 }
 
 function Coin() {
-  // 공식 펀딩 인장과 같은 은색 링 질감 + 빛이 한 바퀴 도는 반짝임, 그 상태로 뒤집힘
+  // 11/2: 밝은 바탕에서 잘 보이게 모카 금속 동전 + 흰 글씨, 크게(100px) · 빛이 한 바퀴 도는 반짝임, 그 상태로 뒤집힘
   return (
-    <motion.div className="relative size-[66px] rounded-full drop-shadow-[0_6px_12px_rgba(0,0,0,.3)]" style={{ transformPerspective: 400 }}
+    <motion.div className="relative size-[100px] rounded-full drop-shadow-[0_10px_18px_rgba(58,46,39,.45)]" style={{ transformPerspective: 400 }}
       animate={{ rotateY: [0, 0, 360, 360] }}
       transition={{ duration: 3, times: [0, 0.15, 0.55, 1], ease: [0.22, 1, 0.36, 1], repeat: Infinity }}>
-      <div className="absolute inset-0 rounded-full bg-[conic-gradient(#ECE9E5,#FFFFFF,#C6C0B8,#F4F1EE,#CFC8BF,#FFFFFF,#DCD6CF,#ECE9E5)]" />
-      <motion.div className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,rgba(255,255,255,.9)_40deg,transparent_90deg)] mix-blend-screen"
+      <div className="absolute inset-0 rounded-full bg-[conic-gradient(#8C6E5C,#C9AE98,#6B5245,#A88B78,#5A463B,#C9AE98,#7A5E4E,#8C6E5C)]" />
+      <motion.div className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,rgba(255,240,225,.55)_40deg,transparent_90deg)] mix-blend-screen"
         animate={{ rotate: 360 }} transition={{ duration: 3, ease: 'linear', repeat: Infinity }} />
-      <span className="absolute inset-[5px] flex items-center justify-center rounded-full border-[1.5px] border-[#6B5245]/60 text-[16px] font-extrabold tracking-[-0.03em] text-[#5A463B]">100%</span>
+      <span className="absolute inset-[7px] flex items-center justify-center rounded-full border-2 border-white/45 text-[25px] font-extrabold tracking-[-0.03em] text-white [text-shadow:0_1px_2px_rgba(42,36,34,.5)]" style={{ backfaceVisibility: 'hidden' }}>100%</span>
     </motion.div>
   )
 }
@@ -127,7 +127,7 @@ const PAYBACK: Ev = {
   cap: '03_이벤트_페이백', when: '펀딩 오픈 이벤트 · 24시간', bg: LIGHT_BG,
   title: <>첫날 펀딩하면<br />3분께<br /><b>100% 페이백</b></>,
   desc: <>오픈 24시간 안에 펀딩하신 분 중 3분께<br /><b>결제 금액 전액</b>을 돌려드립니다.</>,
-  icon: <div className="mr-3 mt-3"><Coin /></div>,  // 11/2: 뒤 흰 원판 없이 동전만
+  icon: <div className="mt-1"><Coin /></div>,  // 11/2: 뒤 흰 원판 없이 동전만
   steps: DO_THREE,
   notes: [
     <>기간: 11월 17일(화) 낮 12시 ~ 11월 18일(수) 오전 11시 59분</>,
