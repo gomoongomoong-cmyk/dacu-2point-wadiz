@@ -151,9 +151,9 @@ const PAYBACK: Ev = {
   ],
 }
 
-/** 상세페이지 미리보기용: 커피·페이백 (자리 수를 그대로 두어 기존 캡처 파일 번호가 밀리지 않게) */
+/** 상세페이지(웹)에는 세 개 모두 — 11/2: 캡처 이미지는 캡처_v3_이벤트 폴더에 따로 */
 export function Events() {
-  return <>{[COFFEE, PAYBACK].map(e => <EventBlock key={e.cap} {...e} />)}</>
+  return <>{[COFFEE, RECRUIT, PAYBACK].map(e => <EventBlock key={e.cap} {...e} />)}</>
 }
 
 /** 이벤트 캡처용 페이지(events.html): 세 개 모두, 각각 한 장씩 */
