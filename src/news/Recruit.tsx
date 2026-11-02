@@ -9,10 +9,10 @@ const IVORY = 'bg-[#F7F2EA]'
 
 /* 일정: 3초마다 선이 왼쪽부터 차오르며 날짜가 하나씩 켜짐 → 잠깐 머묾 → 함께 옅어짐 */
 const STEPS: [string, string, string][] = [
-  ['11/4(수)~11/6(금)', '모집', '자정까지'],
-  ['11/7(토)', '발표', '새소식'],
-  ['11/9(월)', '발송', '우체국 택배'],
-  ['11/15(일)', '후기 마감', '와디즈 커뮤니티'],
+  ['11/4(수)~11/9(월)', '모집', '오후 1시까지'],
+  ['11/9(월)', '발표', '오후 5시 30분'],
+  ['11/10(화)', '발송', '우체국 택배'],
+  ['11/15(일)', '후기 마감', '자정까지'],
 ]
 function Stop({ p, i, children }: { p: MotionValue<number>; i: number; children: ReactNode }) {
   const at = 0.06 + i * 0.16
@@ -99,7 +99,7 @@ export function Recruit() {
           {[
             <>다리가 <b>좌우로 나뉜 스탠드형 TV</b>를 쓰시는 분</>,
             <>TV를 <b>거실장 위</b>에 두고 쓰시는 분</>,
-            <><b>11월 15일(일)까지</b> 사진·영상 후기를 남겨주실 분</>,
+            <><b>11/15(일)까지</b> 사진·영상 후기를 남겨주실 분</>,
           ].map((t, i) => (
             <p key={i} className="flex items-center gap-3 text-[16px] leading-[1.5] text-text [&_b]:font-bold [&_b]:text-ink">{CHECK}<span>{t}</span></p>
           ))}
@@ -116,7 +116,7 @@ export function Recruit() {
       <ul className="mt-11 flex flex-col gap-1.5 rounded-[10px] bg-white/45 px-5 py-5 text-left text-[13px] leading-[1.65] text-sub">
         {[
           '다양한 TV 크기·브랜드로 고르게 선정합니다.',
-          '선정 결과는 11/7(토) 새소식에 (닉네임 일부 가림)',
+          '선정 결과: 11/9(월) 오후 5시 30분 새소식',
           '연락처·주소는 발송에만 쓰고 발송 후 파기합니다.',
         ].map(t => <li key={t} className="flex gap-1.5"><span>·</span><span>{t}</span></li>)}
       </ul>
