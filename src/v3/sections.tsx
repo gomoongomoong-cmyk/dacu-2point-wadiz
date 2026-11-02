@@ -623,7 +623,7 @@ export function Point04() {
           <p className="font-serif text-[15px] italic text-mocha">Material grade</p>
           <p className="mt-2 text-[25.5px] font-medium leading-[1.4] tracking-[-0.03em] text-ink">오래 같은 모습으로<br /><b className="font-extrabold">쓰도록 고른 소재</b></p>
           <div className="mt-5 flex flex-wrap justify-center gap-1">
-            {['국내 가공', '금속 부품 0', '무급유'].map(t => (
+            {['국내 가공', '금속 부품 없음', '무급유'].map(t => (
               <span key={t} className="rounded-full bg-ivory px-2.5 py-1.5 text-[13px] font-semibold text-ink"><span className="mr-0.5 text-mocha">#</span>{t}</span>
             ))}
           </div>
