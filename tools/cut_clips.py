@@ -9,7 +9,7 @@ import pathlib, shutil, subprocess, sys, tempfile
 import imageio_ffmpeg
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SRC = ROOT.parent / '3D' / 'videos' / 'A1_unveil.mp4'
+SRC = ROOT.parent / '03_3D렌더' / 'videos' / 'A1_unveil.mp4'
 OUT = ROOT / 'public' / '3d'
 FF = imageio_ffmpeg.get_ffmpeg_exe()
 SRC_FPS = 30

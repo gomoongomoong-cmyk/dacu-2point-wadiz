@@ -16,7 +16,7 @@ from blackout import blackout, quad_mask, screen_quad
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-SRC = ROOT.parent / '2point TV받침대 영상'
+SRC = ROOT.parent / '02_원본_사진영상' / '1102_실사_사진영상'  # 11/2 폴더 정리
 OUT = ROOT / 'public' / 'photo'
 FF = imageio_ffmpeg.get_ffmpeg_exe()
 PHOTOS = sorted(SRC.glob('*.jpg'))
@@ -181,7 +181,7 @@ def clip(vi, start, length, name, ratio, width, fps=10, cx=0.5, cy=0.5, zoom=1.0
 def rot_pair():
     """이미지 폴더의 '회전 전/후'(세로 3000×4000, 뉴스 방송이 켜진 화면) → 화면을 검게, 같은 카메라 위치로 맞춰 4:5"""
     from blackout import quad_mask
-    IMG = ROOT.parent / '이미지'
+    IMG = ROOT.parent / '02_원본_사진영상' / '받은이미지_9월'
     def load(f): return cv2.cvtColor(np.asarray(ImageOps.exif_transpose(Image.open(IMG / f)).convert('RGB')), cv2.COLOR_RGB2BGR)
     # TV 테두리 네 모서리 (파란 화면이 아니라 자동 검출이 안 돼 GrabCut으로 한 번 잡은 값, 원본 좌표)
     qa = np.float32([[1036, 348], [1920, 876], [1864, 2220], [988, 2524]])

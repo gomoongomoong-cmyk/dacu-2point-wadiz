@@ -159,7 +159,7 @@ const PAYBACK: Ev = {
   ],
 }
 
-/** 상세페이지(웹)에는 세 개 모두 — 11/2: 캡처 이미지는 캡처_v3_이벤트 폴더에 따로 */
+/** 상세페이지(웹)에는 세 개 모두 — 11/2: 캡처 이미지는 01_와디즈_올릴파일/4_이벤트_섹션 폴더에 따로 */
 export function Events() {
   return <>{[COFFEE, RECRUIT, PAYBACK].map(e => <EventBlock key={e.cap} {...e} />)}</>
 }
