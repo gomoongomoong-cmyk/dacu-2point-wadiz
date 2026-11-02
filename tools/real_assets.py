@@ -229,6 +229,7 @@ JOBS = {
     'r_push_b': lambda: clip(6, 0.33, 6.0, 'r_push_b.gif', 16 / 9, 860, zoom=1.03, limit=7_000_000),
     # 히어로: TV 전체가 도는 정면 + 위쪽 벽을 늘려 아이보리로 풀 자리
     'r_hero_w': lambda: clip(2, 14.1, 6.0, 'r_hero_w.gif', 16 / 9, 860, cx=0.57, cy=0.0, zoom=1.22, limit=8_000_000, ext_top=0.45),
+    'intro_turn': lambda: clip(SRC / '1102.mp4', 0.0, 3.0, 'intro_turn.gif', 5 / 3, 800, fps=12, limit=1_950_000, stab=False),  # 와디즈 소개 사진용 GIF (2MB 이하, 800×480)
     'r_hero3': lambda: clip(SRC / '1102.mp4', 0.0, 3.0, 'r_hero3.gif', 16 / 9, 860, fps=15, limit=8_000_000, stab=False),  # 대표님이 직접 자른 3.6초 영상 → 3초 반복
     'r_v1': lambda: clip(1, 0.0, 6.0, 'r_v1.gif', 16 / 9, 860, cx=0.5, cy=0.12, zoom=1.12, limit=7_000_000, smooth=1.6, speed=0.86),
     'r_v5': lambda: clip(5, 0.0, 6.0, 'r_v5.gif', 16 / 9, 860, cx=0.56, cy=0.12, zoom=1.15, limit=7_000_000, smooth=1.6, speed=0.93),
