@@ -92,13 +92,22 @@ const COFFEE: Ev = {
 }
 
 const RECRUIT: Ev = {
-  cap: '02b_이벤트_체험단', when: '오픈예정 이벤트', bg: LIGHT_BG,
-  title: <>오픈 전에<br />먼저 써 볼<br /><b>체험단 7분</b></>,
+  cap: '02b_이벤트_체험단', when: '체험단 모집', bg: LIGHT_BG,
+  title: <>우리 집 TV로<br />먼저 써 볼<br /><b>7분을 찾습니다</b></>,
   desc: <>다큐 턴패드 2-POINT 1세트를 <b>제품으로 제공</b>해 드리고<br />우리 집 거실장 위에서 써 본 솔직한 후기를 받습니다.</>,
+  // 페이백 동전과 같은 원판 안에, 다리 둘 아래 패드 둘인 TV 아이콘 (패드가 3초마다 한 번 반짝)
   icon: (
-    <div className="size-[104px] overflow-hidden rounded-full shadow-[0_14px_28px_-12px_rgba(90,70,59,.45)] ring-4 ring-paper">
-      <img src="/3d/kit_06_angle_dark.jpg" alt="2-POINT 1세트: 상판 2, 하판 2, 연결 핀 2" className="size-full object-cover" />
-    </div>
+    <IconDisc>
+      <svg viewBox="0 0 48 40" className="w-[58px]" fill="#8C6E5C">
+        <rect x="4" y="3" width="40" height="24" rx="2.5" />
+        <rect x="7" y="6" width="34" height="18" rx="1" fill="#F7F2EA" opacity=".35" />
+        <path d="M13 27l-2.5 7M35 27l2.5 7" stroke="#6B5245" strokeWidth="2.2" strokeLinecap="round" />
+        {[6, 33].map(x => (
+          <motion.rect key={x} x={x} y="34" width="9" height="3.2" rx="1.2" fill="#6B5245"
+            animate={{ opacity: [1, 0.35, 1, 1] }} transition={{ duration: 3, times: [0, 0.15, 0.3, 1], repeat: Infinity }} />
+        ))}
+      </svg>
+    </IconDisc>
   ),
   steps: [
     <>프로젝트 상단의 <b className="font-semibold">알림신청</b> 버튼 누르기</>,
