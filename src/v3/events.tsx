@@ -2,11 +2,6 @@ import { motion, useTransform } from 'motion/react'
 import type { ReactNode } from 'react'
 import { Blank, useLoop } from './ui'
 
-/* 이벤트 아이콘 — 채운 모양, 3초 안에 한 번씩 움직임 */
-function IconDisc({ dark, children }: { dark?: boolean; children: ReactNode }) {
-  return <div className={`flex size-[104px] items-center justify-center rounded-full ${dark ? 'bg-espresso-2' : 'bg-paper shadow-[0_14px_28px_-12px_rgba(90,70,59,.35)] ring-1 ring-[#E6DACB]'}`}>{children}</div>
-}
-
 function Coin() {
   // 11/2: 밝은 바탕에서 잘 보이게 모카 금속 동전 + 흰 글씨, 크게(100px). 3초마다 한 바퀴 뒤집힘 (페이지 시계 기준)
   // 뒷면이 보이는 동안은 글씨를 숨김 → 거울처럼 뒤집힌 "100%"가 안 보이게
@@ -14,7 +9,7 @@ function Coin() {
   const angle = useTransform(p, v => { const t = Math.min(1, Math.max(0, (v - 0.15) / 0.4)); return 360 * (1 - Math.pow(1 - t, 3)) })
   const face = useTransform(angle, a => (Math.cos((a * Math.PI) / 180) > 0 ? 1 : 0))
   return (
-    <motion.div className="relative size-[100px] rounded-full drop-shadow-[0_10px_18px_rgba(58,46,39,.45)]" style={{ transformPerspective: 400, rotateY: angle }}>
+    <motion.div className="relative size-[100px] rounded-full" style={{ transformPerspective: 400, rotateY: angle }}>
       <div className="absolute inset-0 rounded-full bg-[conic-gradient(#8C6E5C,#C9AE98,#6B5245,#A88B78,#5A463B,#C9AE98,#7A5E4E,#8C6E5C)]" />
       <motion.div className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,rgba(255,240,225,.55)_40deg,transparent_90deg)] mix-blend-screen"
         animate={{ rotate: 360 }} transition={{ duration: 3, ease: 'linear', repeat: Infinity }} />
@@ -94,24 +89,30 @@ const COFFEE: Ev = {
   ],
 }
 
+/* 체험단 아이콘: 패드 둘 위에서 TV가 좌우로 크게 돌아감 (3초 한 바퀴, 페이지 시계) · 돌 때마다 패드가 밝게 빛남 */
+function TvTurn() {
+  const p = useLoop(3)
+  const turn = useTransform(p, v => 34 * Math.sin(2 * Math.PI * v))
+  const glow = useTransform(turn, a => Math.abs(a) / 34)
+  return (
+    <div className="mr-1 mt-2 w-[118px]">
+      <motion.svg viewBox="0 0 48 40" className="block w-full" style={{ transformPerspective: 260, rotateY: turn }}>
+        <rect x="3" y="2" width="42" height="25" rx="2.5" fill="#6B5245" />
+        <rect x="5.5" y="4.5" width="37" height="20" rx="1" fill="#8C6E5C" />
+        <path d="M8 6.5l9 0-11 13z" fill="#fff" opacity=".18" />
+        <path d="M13 27l-2.4 6.5M35 27l2.4 6.5" stroke="#5A463B" strokeWidth="2.2" strokeLinecap="round" />
+        {[5, 33].map(x => <rect key={x} x={x} y="34.5" width="10" height="3.6" rx="1.3" fill="#C9AE98" />)}
+        {[5, 33].map(x => <motion.rect key={`g${x}`} x={x} y="34.5" width="10" height="3.6" rx="1.3" fill="#6B5245" style={{ opacity: glow }} />)}
+      </motion.svg>
+    </div>
+  )
+}
+
 const RECRUIT: Ev = {
   cap: '02b_이벤트_체험단', when: '체험단 모집', bg: LIGHT_BG,
   title: <>우리 집 TV로<br />먼저 써 볼<br /><b>7분을 찾습니다</b></>,
   desc: <>다큐 턴패드 2-POINT 1세트를 <b>제품으로 제공</b>해 드리고<br />우리 집 거실장 위에서 써 본 솔직한 후기를 받습니다.</>,
-  // 페이백 동전과 같은 원판 안에, 다리 둘 아래 패드 둘인 TV 아이콘 (패드가 3초마다 한 번 반짝)
-  icon: (
-    <IconDisc>
-      <svg viewBox="0 0 48 40" className="w-[58px]" fill="#8C6E5C">
-        <rect x="4" y="3" width="40" height="24" rx="2.5" />
-        <rect x="7" y="6" width="34" height="18" rx="1" fill="#F7F2EA" opacity=".35" />
-        <path d="M13 27l-2.5 7M35 27l2.5 7" stroke="#6B5245" strokeWidth="2.2" strokeLinecap="round" />
-        {[6, 33].map(x => (
-          <motion.rect key={x} x={x} y="34" width="9" height="3.2" rx="1.2" fill="#6B5245"
-            animate={{ opacity: [1, 0.35, 1, 1] }} transition={{ duration: 3, times: [0, 0.15, 0.3, 1], repeat: Infinity }} />
-        ))}
-      </svg>
-    </IconDisc>
-  ),
+  icon: <TvTurn />,
   steps: [
     <>프로젝트 상단의 <b className="font-semibold">알림신청</b> 버튼 누르기</>,
     <><b className="font-semibold">지지서명</b>과 응원 댓글 남기기</>,
