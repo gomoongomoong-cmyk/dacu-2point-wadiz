@@ -1,6 +1,6 @@
-import { motion } from 'motion/react'
+import { motion, useTransform } from 'motion/react'
 import type { ReactNode } from 'react'
-import { Blank } from './ui'
+import { Blank, useLoop } from './ui'
 
 /* 이벤트 아이콘 — 채운 모양, 3초 안에 한 번씩 움직임 */
 function IconDisc({ dark, children }: { dark?: boolean; children: ReactNode }) {
@@ -8,15 +8,18 @@ function IconDisc({ dark, children }: { dark?: boolean; children: ReactNode }) {
 }
 
 function Coin() {
-  // 11/2: 밝은 바탕에서 잘 보이게 모카 금속 동전 + 흰 글씨, 크게(100px) · 빛이 한 바퀴 도는 반짝임, 그 상태로 뒤집힘
+  // 11/2: 밝은 바탕에서 잘 보이게 모카 금속 동전 + 흰 글씨, 크게(100px). 3초마다 한 바퀴 뒤집힘 (페이지 시계 기준)
+  // 뒷면이 보이는 동안은 글씨를 숨김 → 거울처럼 뒤집힌 "100%"가 안 보이게
+  const p = useLoop(3)
+  const angle = useTransform(p, v => { const t = Math.min(1, Math.max(0, (v - 0.15) / 0.4)); return 360 * (1 - Math.pow(1 - t, 3)) })
+  const face = useTransform(angle, a => (Math.cos((a * Math.PI) / 180) > 0 ? 1 : 0))
   return (
-    <motion.div className="relative size-[100px] rounded-full drop-shadow-[0_10px_18px_rgba(58,46,39,.45)]" style={{ transformPerspective: 400 }}
-      animate={{ rotateY: [0, 0, 360, 360] }}
-      transition={{ duration: 3, times: [0, 0.15, 0.55, 1], ease: [0.22, 1, 0.36, 1], repeat: Infinity }}>
+    <motion.div className="relative size-[100px] rounded-full drop-shadow-[0_10px_18px_rgba(58,46,39,.45)]" style={{ transformPerspective: 400, rotateY: angle }}>
       <div className="absolute inset-0 rounded-full bg-[conic-gradient(#8C6E5C,#C9AE98,#6B5245,#A88B78,#5A463B,#C9AE98,#7A5E4E,#8C6E5C)]" />
       <motion.div className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,rgba(255,240,225,.55)_40deg,transparent_90deg)] mix-blend-screen"
         animate={{ rotate: 360 }} transition={{ duration: 3, ease: 'linear', repeat: Infinity }} />
-      <span className="absolute inset-[7px] flex items-center justify-center rounded-full border-2 border-white/45 text-[25px] font-extrabold tracking-[-0.03em] text-white [text-shadow:0_1px_2px_rgba(42,36,34,.5)]" style={{ backfaceVisibility: 'hidden' }}>100%</span>
+      <span className="absolute inset-[7px] rounded-full border-2 border-white/45" />
+      <motion.span className="absolute inset-0 flex items-center justify-center text-[25px] font-extrabold tracking-[-0.03em] text-white [text-shadow:0_1px_2px_rgba(42,36,34,.5)]" style={{ opacity: face }}>100%</motion.span>
     </motion.div>
   )
 }
