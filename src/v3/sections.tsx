@@ -9,29 +9,6 @@ import { PadSize, RoomView } from './diagrams'
 
 const won = (n: number) => n.toLocaleString('ko-KR')
 
-/* ⓪ 교체형 배너 — 기간마다 하나만 올림 */
-export function Banners() {
-  const items = [
-    { cap: '00a_배너_오픈예정', tag: '오픈예정 알림신청 혜택', msg: <>알림신청하시면 슈퍼얼리버드 15개가<br />열리는 순간 가장 먼저 알려드려요</>, sub: '11월 17일(화) 낮 12시 오픈' },
-    { cap: '00b_배너_24시간', tag: '오픈 24시간 이벤트', msg: <>24시간 안에 펀딩하신 분 중 3분께<br />결제 금액 100% 페이백</>, sub: '11월 18일(수) 오전 11시 59분까지 · 펀딩 → 지지서명 → 응원 댓글' },
-    { cap: '00c_배너_72시간', tag: '오픈 72시간 이벤트', msg: <>72시간 안에 펀딩하신 분 중 10분께<br />커피를 보내드려요</>, sub: '11월 19일(목) 오전 11시 59분까지 · 24시간 이벤트 참여자 자동 포함' },
-  ]
-  return (
-    <>
-      {items.map((b, i) => (
-        <div key={b.cap}>
-          {i === 1 && <p className="bg-[#E2DCD4] py-1.5 text-center text-[12px] text-sub">↑ 교체형 배너 · 기간마다 아래 것으로 바꿔 올림 ↓</p>}
-          <section data-cap={b.cap} data-tone="dark" className="bg-espresso px-6 py-5 text-center text-white">
-            <p className="inline-block rounded-full border border-sky-xl/60 px-3 py-[3px] text-[12px] font-semibold text-sky-xl">{b.tag}</p>
-            <p className="mt-2 text-[18px] font-semibold leading-[1.45]">{b.msg}</p>
-            <p className="mt-1 text-[12.5px] text-white/55">{b.sub}</p>
-          </section>
-        </div>
-      ))}
-    </>
-  )
-}
-
 /* 1 공식 펀딩 블록 */
 export function Official() {
   // 위(이벤트03·아이보리)·아래(히어로·흰색)와 겹치지 않게 진한 모카 띠
