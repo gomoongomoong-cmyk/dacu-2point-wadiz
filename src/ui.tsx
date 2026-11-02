@@ -408,11 +408,12 @@ export function Seal({ top, main, sub, size = 112, ring = false }: { top: string
   // ring: 가운데를 비운 은색 링 — 바닥(섹션 배경) 위에서 링만 돌고, 로고는 바닥에 그대로 놓임
   const hole = ring ? { WebkitMaskImage: 'radial-gradient(closest-side, transparent 65.5%, #000 66.5%)', maskImage: 'radial-gradient(closest-side, transparent 65.5%, #000 66.5%)' } : undefined
   return (
-    <div className={`relative shrink-0 rounded-full ${ring ? 'drop-shadow-[0_6px_14px_rgba(0,0,0,.28)]' : 'shadow-[0_8px_20px_rgba(42,36,34,.16)]'}`} style={{ width: size, height: size }}>
+    <div data-loop="7000" className={`relative shrink-0 rounded-full ${ring ? 'drop-shadow-[0_6px_14px_rgba(0,0,0,.28)]' : 'shadow-[0_8px_20px_rgba(42,36,34,.16)]'}`} style={{ width: size, height: size }}>
       <div className="absolute inset-0 rounded-full bg-[conic-gradient(#ECE9E5,#FFFFFF,#C6C0B8,#F4F1EE,#CFC8BF,#FFFFFF,#DCD6CF,#ECE9E5)]" style={hole} />
       <motion.div className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,rgba(255,255,255,.85)_40deg,transparent_90deg)] mix-blend-screen" style={hole}
         animate={{ rotate: 360 }} transition={{ duration: 7, ease: 'linear', repeat: Infinity }} />
-      <motion.svg viewBox={`0 0 ${size} ${size}`} className="absolute inset-0" animate={{ rotate: 360 }} transition={{ duration: 36, ease: 'linear', repeat: Infinity }}>
+      {/* 글자가 두 번 이어져 반 바퀴(7초)마다 같은 모습 → 반짝임 7초와 맞물려 짤로도 끊김 없이 반복 */}
+      <motion.svg viewBox={`0 0 ${size} ${size}`} className="absolute inset-0" animate={{ rotate: 360 }} transition={{ duration: 14, ease: 'linear', repeat: Infinity }}>
         <defs><path id={id} d={`M${size / 2} ${size / 2}m-${r} 0a${r} ${r} 0 1 1 ${2 * r} 0a${r} ${r} 0 1 1 -${2 * r} 0`} /></defs>
         <text fontSize={size * 0.072} fontWeight={700} letterSpacing={size * 0.018} fill="#6B5245"><textPath href={`#${id}`}>{`${top} · ${top} · `}</textPath></text>
       </motion.svg>

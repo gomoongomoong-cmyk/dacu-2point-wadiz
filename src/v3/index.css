@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* 다큐 2-POINT 와디즈 상세 — 아이보리·모카·화이트 */
+@theme {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  --color-ink: #2F2620;
+  --color-text: #3A302A;
+  --color-sub: #6E625A;
+  --color-mute: #7D7168;
+  --color-line: #E8E0D5;
+
+  --color-paper: #FFFFFF;
+  --color-ivory: #F7F2EA;
+  --color-sand: #EFE6DA;
+
+  --color-mocha: #8C6E5C;
+  --color-mocha-d: #6B5245;
+  --color-champagne: #E2D5C6;
+  --color-marker: #EADFD2;
+
+  --color-espresso: #5A463B;
+  --color-espresso-2: #6B5446;
+
+  /* 포인트 색 (스카이블루 취소 → 모카 계열로 통일. 이름은 코드 호환용으로 유지) */
+  --color-sky: #A88B78;
+  --color-sky-l: #F3ECE3;
+  --color-sky-xl: #E2D5C6;
+  --color-sky-d: #6B5245;
+
+  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
+
+  --ease-soft: cubic-bezier(.22, 1, .36, 1);
+}
+
+html { background: #E2DCD4; }
+
+/* 400px로 짠 디자인을 비율 그대로 2.15배 → 가로 860px */
+#root > main, #root > aside { zoom: var(--page-zoom, 2.15); }
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* 개발 노트 손그림 (turnpad about 위젯 .ab-sk 스타일 그대로) */
+.ab-sk { display: block; width: 100%; height: auto; }
+.ab-sk path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.ab-sk .m { stroke: #6E6259; stroke-width: 1.6; }
+.ab-sk .g { stroke-width: .8; opacity: .55; }
+.ab-sk .c { stroke: #C9C0B7; stroke-width: .9; }
+.ab-sk .d { stroke: #6E6259; stroke-width: 1; }
+.ab-sk .a { stroke: #8C6E5C; stroke-width: 2; }
+.ab-sk .x { stroke: #9A8C80; stroke-width: 1.6; }
+.ab-sk .t { fill: #6E6259; }
+.ab-sk .t.em { fill: #8C6E5C; }
+.ab-sk .t.s { fill: #9A8C80; }
+.ab-sk .t.x { fill: #B3A79C; }
+.ab-sk .pen { font-family: "Nanum Pen Script", cursive; letter-spacing: 0; }
+.ab-sk .en { font-family: "Caveat", "Nanum Pen Script", cursive; letter-spacing: 0; }
+/* 3초 반복(v3 공통 박자): 선이 순서대로 그려지고(약 1.7초) → 다 그려진 채 잠깐 머묾 → 옅어지고 다시 */
+.dn-sk .ab-sk path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.dn-sk .ab-sk text { opacity: 0; }
+.dn-sk.on .ab-sk path { animation: sk-draw 3s ease-in-out calc(var(--i) / var(--n, 100) * 1.1s) infinite; }
+.dn-sk.on .ab-sk text { animation: sk-text 3s ease calc(var(--i) / var(--n, 100) * 1.1s) infinite; }
+@keyframes sk-draw { 0% { stroke-dashoffset: 1; opacity: 1; } 18% { stroke-dashoffset: 0; } 86% { stroke-dashoffset: 0; opacity: 1; } 96% { opacity: 0; } 100% { stroke-dashoffset: 1; opacity: 0; } }
+@keyframes sk-text { 0%, 12% { opacity: 0; } 24%, 86% { opacity: 1; } 96%, 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .dn-sk .ab-sk path, .dn-sk.on .ab-sk path { stroke-dashoffset: 0; animation: none; }
+  .dn-sk .ab-sk text, .dn-sk.on .ab-sk text { opacity: 1; animation: none; }
+}
+
+/* 히어로 워드마크 그리기 (turnpad about 첫 화면 .ab-intro__mark 와 같은 그림) — 6초 반복(v3 공통 박자의 배수) */
+.logo-draw .ab-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.logo-draw svg:not(.ab-defs) { display: block; width: 100%; height: auto; overflow: visible; }
+.logo-draw .ab-intro__grid-svg { position: absolute; inset: 0; height: 100%; pointer-events: none; }
+.logo-draw .ab-logo { position: relative; }
+.logo-draw .ab-g { opacity: 0; }
+.logo-draw .ab-l { fill: #6B5245; stroke: #6B5245; stroke-width: .6px; stroke-dasharray: 1; stroke-dashoffset: 1; fill-opacity: 0; animation: ld-ink 6s ease-in-out infinite; }
+.logo-draw .ab-lA { animation-delay: .15s; }
+.logo-draw .ab-lC { animation-delay: .3s; }
+.logo-draw .ab-lU { animation-delay: .45s; }
+.logo-draw .ab-guides line, .logo-draw .ab-guides circle, .logo-draw .ab-guides ellipse, .logo-draw .ab-guides path, .logo-draw .ab-guides rect { fill: none; stroke: #B9AEA4; stroke-width: .7px; vector-effect: non-scaling-stroke; }
+.logo-draw .ab-guides .fa { stroke-dasharray: 3 4; }
+.logo-draw .ab-guides .os { stroke-dasharray: 1.5 2.5; }
+.logo-draw .ab-guides .bx { stroke: #D3CBC2; }
+.logo-draw .ab-guides .rmv { fill: none; stroke: #D3CBC2; }
+.logo-draw .ab-guides .gd-grid line { stroke: #D6CFC7; stroke-width: .5px; }
+.logo-draw .ab-iguides { opacity: 0; animation: ld-guide 6s ease infinite; }
+/* 선이 그려짐(0~1.6초) → 면으로 채워짐(~2.3초) → 머묾 → 옅어짐(5.3~5.8초) */
+@keyframes ld-ink {
+  0% { stroke-dashoffset: 1; fill-opacity: 0; stroke-opacity: 1; opacity: 1; }
+  25% { fill-opacity: 0; }
+  27% { stroke-dashoffset: 0; }
+  38% { fill-opacity: 1; stroke-opacity: 0; }
+  88% { opacity: 1; fill-opacity: 1; stroke-opacity: 0; stroke-dashoffset: 0; }
+  96% { opacity: 0; fill-opacity: 1; stroke-opacity: 0; stroke-dashoffset: 0; }
+  100% { opacity: 0; fill-opacity: 0; stroke-dashoffset: 1; stroke-opacity: 1; }
+}
+/* 모눈·구성선: 그리는 동안만 */
+@keyframes ld-guide { 0% { opacity: 0; } 8% { opacity: 1; } 42% { opacity: 1; } 60% { opacity: 0; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .logo-draw .ab-l { animation: none; fill-opacity: 1; stroke-width: 0; }
+  .logo-draw .ab-iguides { display: none; }
+}
