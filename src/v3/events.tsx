@@ -127,7 +127,7 @@ const PAYBACK: Ev = {
   cap: '03_이벤트_페이백', when: '펀딩 오픈 이벤트 · 24시간', bg: LIGHT_BG,
   title: <>첫날 펀딩하면<br />3분께<br /><b>100% 페이백</b></>,
   desc: <>오픈 24시간 안에 펀딩하신 분 중 3분께<br /><b>결제 금액 전액</b>을 돌려드립니다.</>,
-  icon: <IconDisc><Coin /></IconDisc>,
+  icon: <div className="mr-3 mt-3"><Coin /></div>,  // 11/2: 뒤 흰 원판 없이 동전만
   steps: DO_THREE,
   notes: [
     <>기간: 11월 17일(화) 낮 12시 ~ 11월 18일(수) 오전 11시 59분</>,
