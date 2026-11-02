@@ -7,7 +7,7 @@
    - quote: 후기 원문 그대로 인용 (고치지 않음)
    - tv: TV 크기·브랜드 (예: 75인치 · 삼성)
    - nick: 닉네임 일부만 (예: 김**)
-   - 맨 앞 문구 "제품을 무료로 제공받아 작성한 후기"는 페이지가 자동으로 붙임 (공정위 추천·보증 심사지침) */
+   (11/2: 무료 제공 안내 문구는 넣지 않기로 함) */
 export type Review = { photo?: string; title: string; quote: string; tv: string; nick: string }
 
 export const REVIEWS: Review[] = [

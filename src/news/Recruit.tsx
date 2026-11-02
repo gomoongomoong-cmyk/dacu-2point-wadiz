@@ -113,12 +113,11 @@ export function Recruit() {
       </div>
 
       {/* 안내 */}
-      <ul className="mt-11 flex flex-col gap-1.5 rounded-[10px] bg-paper px-5 py-5 text-left text-[13px] leading-[1.65] text-sub ring-1 ring-line">
+      <ul className="mt-11 flex flex-col gap-1.5 rounded-[10px] bg-white/45 px-5 py-5 text-left text-[13px] leading-[1.65] text-sub">
         {[
-          '다양한 TV 크기와 브랜드에서 써보실 수 있도록 고르게 선정합니다.',
-          '선정 결과는 11월 7일(토) 새소식으로 알려드립니다. (닉네임 일부 가림)',
-          '후기 맨 앞에 "다큐로부터 제품을 무료로 제공받아 작성한 후기입니다"를 꼭 적어 주세요.',
-          '받은 연락처와 주소는 제품 발송에만 쓰고, 발송 후 파기합니다.',
+          '다양한 TV 크기·브랜드로 고르게 선정합니다.',
+          '선정 결과는 11/7(토) 새소식에 (닉네임 일부 가림)',
+          '연락처·주소는 발송에만 쓰고 발송 후 파기합니다.',
         ].map(t => <li key={t} className="flex gap-1.5"><span>·</span><span>{t}</span></li>)}
       </ul>
     </section>

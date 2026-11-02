@@ -922,7 +922,6 @@ export function Reviews() {
     <Section cap="21_체험단" tone="ivory">
       <Serif>Real living rooms</Serif>
       <div className="mt-3"><Heading lead="먼저 써본 일곱 집이 남긴">체험단의 <Underline>실제 거실</Underline></Heading></div>
-      <p className="mt-6 rounded-[6px] bg-paper px-4 py-3 ring-1 ring-line text-left text-[13px] leading-[1.6] text-sub">아래 후기는 다큐가 체험단 일곱 분께<br />제품을 무료로 제공하고 받은 후기입니다.</p>
       <div className="mt-3 flex flex-col gap-2 text-left">
         {/* 후기 내용은 reviews.ts에서 */}
         {REVIEWS.map((r, n) => (

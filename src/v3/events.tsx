@@ -1,5 +1,5 @@
 import { motion, useTransform } from 'motion/react'
-import type { ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { Blank, useLoop } from './ui'
 
 function Coin() {
@@ -19,7 +19,7 @@ function Coin() {
   )
 }
 
-type Ev = { cap: string; when: string; title: ReactNode; desc: ReactNode; icon: ReactNode; steps: ReactNode[]; notes: ReactNode[]; dark?: boolean; bg: string }
+type Ev = { cap: string; when: string; title: ReactNode; desc: ReactNode; icon: ReactNode; steps: ReactNode[]; notes: [string, string][]; dark?: boolean; bg: string }
 
 /* 섹션마다 은은한 그라데이션 — 바탕은 위아래로 살짝만 진하기가 달라지고, 어두운 섹션만 아이콘 뒤에 옅은 빛
    (밝은 섹션은 흰 빛이 흰 원과 섞여 원이 안 보여서 뺌) */
@@ -47,9 +47,15 @@ function EventBlock({ cap, when, title, desc, icon, steps, notes, dark = false, 
           </li>
         ))}
       </ol>
-      <ul className={`mt-6 rounded-[8px] px-4 py-4 text-[13px] leading-[1.75] ${dark ? 'bg-white/[.06] text-white/55' : 'bg-paper text-mute ring-1 ring-line'}`}>
-        {notes.map((t, i) => <li key={i} className="flex gap-1.5"><span>·</span><span>{t}</span></li>)}
-      </ul>
+      {/* 11/2: 이름표 + 한 줄에 하나씩 (· 로 이어 붙이거나 어중간하게 줄바꿈되지 않게) */}
+      <dl className={`mt-6 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 rounded-[8px] px-4 py-4 text-[13px] leading-[1.55] ${dark ? 'bg-white/[.06]' : 'bg-white/45'}`}>{/* 11/2: 테두리 없이 반투명 */}
+        {notes.map(([k, v]) => (
+          <Fragment key={k}>
+            <dt className={`font-semibold ${dark ? 'text-sky-xl' : 'text-mocha-d'}`}>{k}</dt>
+            <dd className={dark ? 'text-white/70' : 'text-sub'}>{v}</dd>
+          </Fragment>
+        ))}
+      </dl>
     </section>
   )
 }
@@ -84,8 +90,9 @@ const COFFEE: Ev = {
     <><b className="font-semibold">지지서명</b>과 응원 댓글 남기기</>,
   ],
   notes: [
-    <>기간: 11월 4일(수) 오전 10시 15분 ~ 11월 17일(화) 낮 12시 오픈 전까지</>,
-    '발표: 펀딩 종료 후 새소식 · 기프티콘은 종료 후 14일 안에 발송',
+    ['기간', '11/4(수) 오전 10:15 ~ 11/17(화) 낮 12시'],
+    ['발표', '펀딩 종료 후 새소식'],
+    ['발송', '펀딩 종료 후 14일 안에 기프티콘'],
   ],
 }
 
@@ -130,11 +137,12 @@ const RECRUIT: Ev = {
     <><b className="font-semibold">신청 폼</b> 작성 · TV와 거실장 사진 첨부</>,
   ],
   notes: [
-    '신청 폼 링크는 체험단 모집 새소식에 있습니다.',
-    <>모집: 11월 4일(수) ~ 11월 6일(금) 자정 · 발표: 11월 7일(토) 새소식</>,
-    '발송: 11월 9일(월) · 후기 마감: 11월 15일(일) 와디즈 커뮤니티',
-    '다리가 좌우로 나뉜 스탠드형 TV를 거실장 위에 두고 쓰시는 분',
-    '후기 맨 앞에 "제품을 무료로 제공받아 작성한 후기입니다"를 적어 주세요.',
+    ['모집', '11/4(수) ~ 11/6(금) 자정'],
+    ['발표', '11/7(토) 새소식'],
+    ['발송', '11/9(월)'],
+    ['후기', '11/15(일)까지 와디즈 커뮤니티'],
+    ['대상', '다리가 좌우로 나뉜 TV를 거실장 위에 두신 분'],
+    ['신청 폼', '체험단 모집 새소식에 링크'],
   ],
 }
 
@@ -145,9 +153,9 @@ const PAYBACK: Ev = {
   icon: <div className="mt-1"><Coin /></div>,  // 11/2: 뒤 흰 원판 없이 동전만
   steps: DO_THREE,
   notes: [
-    <>기간: 11월 17일(화) 낮 12시 ~ 11월 18일(수) 오전 11시 59분</>,
-    '발표: 펀딩 종료 후 새소식 (결제 실패·취소 건 제외)',
-    <>본인 명의 계좌로 입금, 제세공과금은 다큐가 부담합니다.</>,
+    ['기간', '11/17(화) 낮 12시 ~ 11/18(수) 오전 11:59'],
+    ['발표', '펀딩 종료 후 새소식 (결제 실패·취소 제외)'],
+    ['지급', '본인 명의 계좌, 제세공과금은 다큐 부담'],
   ],
 }
 
