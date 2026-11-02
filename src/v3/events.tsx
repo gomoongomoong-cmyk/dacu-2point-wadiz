@@ -134,7 +134,7 @@ const RECRUIT: Ev = {
   steps: [
     <>프로젝트 상단의 <b className="font-semibold">알림신청</b> 버튼 누르기</>,
     <><b className="font-semibold">지지서명</b>과 응원 댓글 남기기</>,
-    <><b className="font-semibold">신청 폼</b> 작성 · TV와 거실장 사진 첨부</>,
+    <><b className="font-semibold">신청 폼</b> 작성하기</>,
   ],
   notes: [
     ['모집', '11/4(수) ~ 11/9(월) 오후 1시'],

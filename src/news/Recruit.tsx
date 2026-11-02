@@ -82,7 +82,7 @@ export function Recruit() {
           {[
             <>이 프로젝트 <b>알림신청</b></>,
             <><b>지지서명</b>에 응원 댓글 남기기</>,
-            <><b>신청 폼</b> 작성 · TV와 거실장 사진 첨부<span className="mt-0.5 block text-[12.5px] font-normal text-mute">폼 링크는 새소식 본문에 있습니다</span></>,
+            <><b>신청 폼</b> 작성하기<span className="mt-0.5 block text-[12.5px] font-normal text-mute">폼 링크는 새소식 본문에 있습니다</span></>,
           ].map((t, i) => (
             <li key={i} className="flex items-start gap-3.5 rounded-[10px] bg-paper px-5 py-4 text-[16px] leading-[1.5] text-text ring-1 ring-line [&_b]:font-bold [&_b]:text-ink">
               <span className="mt-[1px] flex size-[24px] shrink-0 items-center justify-center rounded-full bg-espresso text-[13px] font-bold text-white">{i + 1}</span>
