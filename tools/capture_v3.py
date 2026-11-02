@@ -14,7 +14,7 @@
   python tools/capture_v3.py <출력 폴더> [섹션 cap ...]
 파일 이름: <순서 2자리>_<섹션 이름>.jpg|gif → 이름 순서대로 올리면 됨
 """
-import io, sys, math, pathlib, subprocess, shutil, tempfile
+import io, os, sys, math, pathlib, subprocess, shutil, tempfile
 import numpy as np
 from PIL import Image
 import imageio_ffmpeg
@@ -23,7 +23,7 @@ from playwright.sync_api import sync_playwright
 sys.stdout.reconfigure(encoding='utf-8')
 OUT = pathlib.Path(sys.argv[1]); OUT.mkdir(parents=True, exist_ok=True)
 ONLY = sys.argv[2:]
-URL = 'http://localhost:5179/v3.html?cap'
+URL = os.environ.get('CAP_URL', 'http://localhost:5179/v3.html?cap')  # 새소식: CAP_URL=http://localhost:5179/news.html?cap
 W = 860                      # 화면 폭 = 저장 폭 (페이지가 2.15배로 그려짐)
 STEP = 50                    # 1초 20장
 BEAT = 3000                  # v3 공통 박자
@@ -42,6 +42,11 @@ STEP_JS = """(t) => {
     const end = a.effect ? a.effect.getComputedTiming().endTime : Infinity;
     if (Number.isFinite(end) && want >= end) { a.finish(); window.__capT.delete(a); continue; }
     a.currentTime = want;
+  }
+  // SVG 자체 애니메이션(animateTransform 등)은 실제 시간으로 흘러 캡처에서 빨라짐 → 멈추고 페이지 시계 시각으로 직접 맞춤
+  for (const s of document.querySelectorAll('svg')) {
+    if (!s.querySelector('animate, animateTransform, animateMotion')) continue;
+    s.pauseAnimations(); s.setCurrentTime(performance.now() / 1000);
   } }"""
 CLOCK = {'t': 0}
 
@@ -172,6 +177,17 @@ def encode(tmp, keep, durs, path):
     return f'GIF {colors}색 (10MB 넘음!)'
 
 
+def edge_trim(img):
+    """자르는 자리가 소수점 픽셀에 걸려 옆 섹션(진한 띠 등)이 1~3줄 묻어 들어오면 그 줄을 잘라냄 → 위아래 끝에 가는 선이 안 생김"""
+    def n(rows):
+        k = 0
+        for r in rows:
+            if np.abs(img[r].astype(np.int16).mean(0) - img[rows[-1] + (1 if rows[-1] > rows[0] else -1)].astype(np.int16).mean(0)).max() > 20: k += 1
+            else: break
+        return k
+    return n([0, 1, 2]), n([-1, -2, -3])
+
+
 def capture_piece(cap, y0, y1, name):
     h = y1 - y0
     pg.set_viewport_size({'width': W, 'height': h})
@@ -180,13 +196,15 @@ def capture_piece(cap, y0, y1, name):
     gifs = pg.evaluate(HIDE_JS, [cap, y0, y1]); pg.evaluate(SHOW_JS)
     # 움직이는 것이 있는지: 1.5초 동안 0.25초마다 비교
     base = shot(pg, h); moving = bool(gifs)
+    t_cut, b_cut = edge_trim(base)  # 끝 줄 잘라낼 수
+    crop = lambda im: im[t_cut:im.shape[0] - b_cut]
     for _ in range(6):
         if moving: break
         tick(pg, 250); pg.wait_for_timeout(15)
         moving = np.abs(shot(pg, h).astype(np.int16) - base).max() > 14
     if not moving:
-        Image.fromarray(shot(pg, h)).save(OUT / f'{name}.jpg', quality=93, subsampling=0)
-        print(f'{name}.jpg: {h}px · JPG · {(OUT / f"{name}.jpg").stat().st_size / 1e6:.1f}MB', flush=True)
+        Image.fromarray(crop(shot(pg, h))).save(OUT / f'{name}.jpg', quality=93, subsampling=0)
+        print(f'{name}.jpg: {h - t_cut - b_cut}px · JPG · {(OUT / f"{name}.jpg").stat().st_size / 1e6:.1f}MB', flush=True)
         return
 
     gifs = pg.evaluate(HIDE_JS, [cap, y0, y1])
@@ -221,6 +239,7 @@ def capture_piece(cap, y0, y1, name):
                 have[ya:yb, xa:xb] = cov[ya - y:yb - y, xa - x:xb - x]
             a = (alpha * have)[..., None]
             img = np.clip(np.rint(img.astype(np.float32) - a * MAG + a * layer), 0, 255).astype(np.uint8)
+        img = crop(img)
         if first is None: first = img
         if prev is not None and np.abs(img.astype(np.int16) - prev).max() <= 3:
             durs[-1] += STEP; continue
@@ -232,7 +251,7 @@ def capture_piece(cap, y0, y1, name):
     path = OUT / f'{name}.gif'
     kind = encode(tmp, keep, durs, path) if len(keep) > 1 else 'GIF 1장(움직임 없음?)'
     shutil.rmtree(tmp, ignore_errors=True)
-    print(f'{name}.gif: {h}px · {kind} · {path.stat().st_size / 1e6:.1f}MB · 이음새 {seam:.2f}', flush=True)
+    print(f'{name}.gif: {h - t_cut - b_cut}px' + (f' (끝 줄 {t_cut}/{b_cut} 잘라냄)' if t_cut or b_cut else '') + f' · {kind} · {path.stat().st_size / 1e6:.1f}MB · 이음새 {seam:.2f}', flush=True)
 
 
 # ───────── 실행 ─────────

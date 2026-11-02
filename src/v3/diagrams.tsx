@@ -1,4 +1,8 @@
-import { motion } from 'motion/react'
+import { motion, useMotionValueEvent } from 'motion/react'
+import { useState } from 'react'
+import { useLoop } from './ui'
+
+const inOut = (v: number, a: number, b: number) => { const t = Math.min(1, Math.max(0, (v - a) / (b - a))); return t * t * (3 - 2 * t) }
 
 const swing = { duration: 1.5, ease: 'easeInOut' as const, repeat: Infinity, repeatType: 'mirror' as const }
 
@@ -45,16 +49,17 @@ export function TopView() {
 export function RoomView() {
   // 처음 배치 그대로(소파 정면 · 식탁 왼쪽 아래 · 창 오른쪽). 화면 방향 점선은 TV와 한 몸으로 돌아 늘 화면에 수직
   // 정면(0°)이면 점선이 소파로, 오른쪽 끝이 앞으로 나오게 돌리면(시계 방향) 점선이 식탁으로
+  const p = useLoop(6)
+  const [angle, setAngle] = useState(0)
+  // 정면 → 1.2초부터 32° 돌아감 → 4.2초부터 정면으로 돌아옴 (가운데 부드럽게)
+  useMotionValueEvent(p, 'change', v => setAngle(32 * (inOut(v, 0.2, 0.4) - inOut(v, 0.7, 0.9))))
   return (
     <svg viewBox="0 0 400 290" className="w-full" aria-label="위에서 본 거실. TV가 소파 정면에서 식탁 쪽으로 각도를 바꾼다">
       <rect x="20" y="16" width="360" height="262" rx="14" fill="none" stroke="#E2DBD1" strokeWidth="1.4" />
       <rect x="110" y="36" width="180" height="26" rx="5" fill="#EFE6DA" />
       <text x="112" y="78" fontSize="11" fill="#6E625A">거실장</text>
-      {/* 회전 중심을 TV 가운데(200,53)에 못 박으려고 SVG 자체 회전 애니메이션 사용 */}
-      <g>
-        <animateTransform attributeName="transform" type="rotate" dur="3s" repeatCount="indefinite"
-          values="0 200 53;0 200 53;32 200 53;32 200 53;0 200 53;0 200 53" keyTimes="0;0.2;0.4;0.7;0.9;1"
-          calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1;.42 0 .58 1;0 0 1 1" />
+      {/* 회전 중심 = TV 가운데(200,53). 11/2: SVG 자체 애니메이션은 캡처 시계를 안 따라 멈춰 찍혀서, 페이지 공통 시계(6초 한 바퀴)로 각도를 계산 */}
+      <g transform={`rotate(${angle} 200 53)`}>
         <line x1="200" y1="59" x2="200" y2="229" stroke="#A88B78" strokeWidth="2" strokeDasharray="4 6" />
         <rect x="148" y="48" width="104" height="9" rx="2" fill="#2F2620" />
       </g>

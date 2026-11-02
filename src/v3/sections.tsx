@@ -81,7 +81,7 @@ export function Hero() {
   return (
     <section data-cap="05_히어로">
       {/* 위는 아이보리, 아래로 갈수록 사진이 드러남 — 글자는 아이보리 위에 있어 늘 또렷 */}
-      <div className="relative bg-[linear-gradient(to_bottom,#FFFFFF_0px,#F7F2EA_140px,#F7F2EA_100%)]">
+      <div className="relative bg-[linear-gradient(to_bottom,#FFFFFF_0px,#F7F2EA_140px,#F7F2EA_calc(100%_-_200px),#FFFFFF_100%)]">
         <div className="relative z-10 px-6 pt-14 text-center text-ink">
           <div className="flex justify-center"><Logo className="h-[14px] text-mocha-d" /></div>
           <p className="mt-9 inline-block rounded-full bg-mocha-d px-4 py-[7px] text-[14px] font-semibold text-white">거실장 위 대형 TV 회전 받침대</p>
@@ -93,6 +93,7 @@ export function Hero() {
           <Slot kind="GIF" what="손끝으로 밀면 TV가 제자리에서 각도를 바꾸는 장면" how="삼각대 고정 · 2~3초 왕복 반복 · TV·거실장 전체와 양쪽 패드가 보이게 · 화면 위쪽은 밝은 벽(아이보리 그라데이션과 이어짐) · 860×860 GIF 4MB 미만" code="A1" src="/photo/r_hero3.gif" noTag round className="aspect-video shadow-[0_18px_40px_-18px_rgba(42,36,34,.45)]" />
         </div>
       </div>
+      <div data-cut aria-hidden className="h-0" />{/* 11/2: 영상과 아이콘 줄을 따로 (둘 다 끝이 흰색) */}
       {/* 필요 없는 세 가지: 얇은 선 아이콘 위로 사선이 차례로 그어짐 */}
       <div className="bg-paper px-6 pb-12 pt-12 text-center text-ink">
         <div className="grid grid-cols-3">
@@ -281,7 +282,8 @@ export function Problem() {
         </h2>
         <VLine />
         <Body className="!mt-0">수납 거실장 위, 쓰던 자리 그대로.<br />벽도 가구도 손대지 않고 <b>TV 각도만</b> 바꿉니다.</Body>
-        <div data-loop="4500" className="relative -mx-6 mt-9 aspect-[4/5] overflow-hidden bg-sand">
+        <div data-cut aria-hidden className="h-9" />{/* 11/2: 한 장이 길어 회전 전/후 사진 위 흰 여백에서 나눔 */}
+        <div data-loop="4500" className="relative -mx-6 aspect-[4/5] overflow-hidden bg-sand">
           <img src="/photo/r_rot_before.jpg" alt="수납 거실장 위 대형 TV" className="absolute inset-0 size-full object-cover" />
           <motion.img src="/photo/r_rot_after.jpg" alt="같은 자리에서 각도만 바꾼 TV" className="absolute inset-0 size-full object-cover" style={{ opacity: after }} />
           {(['회전 전', '회전 후'] as const).map((t, k) => (
@@ -409,7 +411,7 @@ export function Point01() {
         <Body dark className="!mt-0">두 패드가 TV의 두 다리를 하나씩 받쳐<br />TV는 원래 서 있던 자세 그대로 섭니다.<br /><b>바뀌는 것은 각도뿐입니다.</b></Body>
       </div>
       <div className="mt-8"><FrontPoints /></div>
-      <Slot kind="GIF" what="TV를 손으로 밀어도 흔들림 없이 각도만 바뀌는 장면" how="가장 중요한 컷 · 삼각대 고정 · TV 윗부분까지 화면에 다 들어오게 · 손이 TV 옆면을 밀고 멈출 때까지 · 원본 10초 → GIF 2~3초 발췌" code="A5" src="/photo/pad_turn_real_169_b.gif" noTag bleed className="mt-8 aspect-video" />
+      <Slot kind="GIF" what="TV를 손으로 밀어도 흔들림 없이 각도만 바뀌는 장면" how="가장 중요한 컷 · 삼각대 고정 · TV 윗부분까지 화면에 다 들어오게 · 손이 TV 옆면을 밀고 멈출 때까지 · 원본 10초 → GIF 2~3초 발췌" code="A5" src="/photo/pad_turn_real_169_b.gif" noTag bleed className="aspect-video" />
       <div className="mt-6 flex flex-col gap-2">
         {checks.map(([b, s], i) => (
           <div key={b} className="flex items-center gap-4 rounded-[8px] bg-white/[.06] px-4 py-3.5">
@@ -488,12 +490,14 @@ export function Point02() {
         </div>
         <figcaption className="mt-3 text-center text-[12.5px] text-mute">위에서 본 모습 · 점선이 두 홈이 놓인 원입니다</figcaption>
       </figure>
-      <div className="mt-14">
+      <Break h={140} className="mt-6 mb-2" />{/* 11/2: 움직이는 그림마다 한 장씩 — 흰 띠 가운데서 나눔 */}
+      <div>
         <p className="text-[18px] font-bold text-ink">손으로 밀면, 두 패드가 함께 움직입니다</p>
         <p className="mt-3 text-[14.5px] leading-[1.7] text-sub">상판 아래 핀이 하판의 곡선 홈을 따라 움직입니다.<br />두 다리 간격은 그대로, 좌우 상판이 함께 돌아<br />TV의 방향만 바뀝니다.</p>
         <Slot kind="GIF" what="위에서 본 패드 하나: 상판이 홈을 따라 돌았다 돌아옴" how="3D · 수직 부감" code="C4-2" src="/3d/open_c4.gif" noTag round className="mt-6 aspect-square" />
       </div>
-      <div className="mt-14"><Heading lead="회전판·베어링·오일을 덜어내고"><b>세 가지 부품</b>만 남겼습니다</Heading></div>
+      <Break h={140} className="mt-6 mb-2" />
+      <div><Heading lead="회전판·베어링·오일을 덜어내고"><b>세 가지 부품</b>만 남겼습니다</Heading></div>
       {/* 부품 카드 3장 */}
       <div className="mt-9 grid grid-cols-3 gap-2 text-center">
         {parts.map(([name, role, img], i) => (
@@ -506,7 +510,7 @@ export function Point02() {
         ))}
       </div>
       <p className="mt-4 text-[13.5px] text-sub">세 가지가 맞물려 패드 하나가 되고, 패드 두 개가 한 세트입니다.</p>
-      <InfoPill>턴패드 구조는 디자인 등록 제30-1267775호 · 2-POINT는 출원 30-2026-0034869</InfoPill>
+      <InfoPill>디자인 등록 30-1267775 · 디자인 출원 30-2026-0034869</InfoPill>
     </Section>
   )
 }
@@ -518,7 +522,7 @@ export function Point03() {
       <DetailTag n={5} label="EVERYDAY" />
       <Heading lead="앉은 자리에 맞춰 조금만">그 몇 도가<br /><FillText>거실의 하루</FillText>를 바꿉니다</Heading>
       <Body>소파 끝자리에서도 고개를 돌리지 않고,<br />오후 햇빛이 비칠 때는 살짝 비켜 둡니다.</Body>
-      <Fig caption="위에서 본 거실 · 앉는 자리에 따라 화면을 맞춥니다"><RoomView /></Fig>
+      <div data-loop="6000"><Fig caption="위에서 본 거실 · 앉는 자리에 따라 화면을 맞춥니다"><RoomView /></Fig></div>{/* 11/2: 너무 빨라 6초 한 바퀴로 */}
       {/* 지금까지는 / 턴패드는: 진한 바탕 한 장 — 자르는 줄(data-cut)은 흰 띠 끝, 진한 면이 시작하는 자리. 진한 면은 섹션 끝까지 */}
       <div aria-hidden className="-mx-6 mt-6 h-[110px] bg-[linear-gradient(to_bottom,rgba(255,255,255,0),#FFFFFF)]" />
       <div data-cut aria-hidden className="-mx-6 h-0" />
@@ -712,11 +716,13 @@ export function Point05() {
       <Heading lead="공구도, 벽 공사도 없이">놓고, 올리면 <Underline>설치 끝</Underline></Heading>
       <div className="mt-10 flex flex-col gap-11 text-left">
         {steps.map(([t, d, tag, src, code], i) => (
-          <div key={t}>
+          <div key={t} className="relative">
+            {i === 2 && <div data-cut aria-hidden className="absolute inset-x-0 -top-[22px] h-0" />}{/* 한 장이 10MB를 넘어서 2·3단계 사이 흰 여백에서 나눔 */}
             <div className="relative">
               <Slot kind="GIF" what={t} how={d} code={code} src={src} noTag round className="aspect-[16/10]" />
               <span className="absolute left-3 top-3 z-20 flex size-[30px] items-center justify-center rounded-full bg-mocha-d text-[14px] font-bold text-white">{i + 1}</span>
             </div>
+            {i === 0 && <CgCap className="!mt-1.5" />}{/* 11/2: 3D 표기는 3D인 1단계에만 (2·3단계는 실사) */}
             <div className="mt-4 flex items-baseline justify-between gap-3">
               <p className="text-[19px] font-bold text-ink">{t}</p>
               <span className="shrink-0 text-[12.5px] font-semibold text-mocha">{tag}</span>
@@ -725,8 +731,8 @@ export function Point05() {
           </div>
         ))}
       </div>
-      <CgCap className="!mt-3" />
-      <div className="mt-14 border-t border-ink/15 pt-8 text-left">
+      <div data-cut aria-hidden className="mt-9 h-0" />
+      <div className="mt-9 pt-4 text-left">
         <div className="flex items-start justify-between">
           <p className="text-[25.5px] font-medium leading-[1.35] tracking-[-0.03em] text-ink">거실장 위에서<br /><b className="font-extrabold">드러나지 않는 두께</b></p>
           <span className="font-serif text-[16px] italic text-mute">Low profile</span>
@@ -742,6 +748,7 @@ export function Point05() {
             <span className="absolute bottom-2 left-2 z-20 rounded-full bg-espresso/80 px-2.5 py-1 text-[11.5px] font-semibold text-white backdrop-blur-sm">옆에서 본 하판</span>
           </div>
         </div>
+        <CgCap className="!mt-1.5" />
         <p className="mt-4 text-[15px] leading-[1.75] text-sub">상판 10mm와 하판 5mm를 합친 두께입니다.<br />TV는 그만큼만 높아지고<br /><b className="font-semibold text-ink">사운드바·선 정리는 그대로</b>입니다.</p>
       </div>
       <ul className="mt-6 border-t border-line pt-4 text-left">
@@ -785,6 +792,7 @@ export function Fit() {
       </div>
       <Fig><PadSize /></Fig>
       <Body>TV 다리 바닥이 <b>상판(100 × 350mm)</b> 위에<br />올라가는지 확인해 주세요.</Body>
+      <Body className="!mt-3">거실장 위에 <b>하판(500 × 130mm)</b>이<br />밖으로 나오지 않고 다 올라가는지도 봐 주세요.</Body>
     </Section>
   )
 }

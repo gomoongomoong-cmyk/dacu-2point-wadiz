@@ -287,8 +287,7 @@ export function WordRoll({ words, interval = 2000 }: { words: string[]; interval
     <span data-loop={words.length * interval} className="relative inline-grid overflow-hidden align-bottom">
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span key={i} className="col-start-1 row-start-1 font-semibold text-sky-d [[data-tone=dark]_&]:text-sky-xl"
-          initial={{ y: '70%', opacity: 0, filter: 'blur(6px)' }} animate={{ y: '0%', opacity: 1, filter: 'blur(0px)' }}
-          exit={{ y: '-70%', opacity: 0, filter: 'blur(6px)' }} transition={{ duration: 0.7, ease: EASE }}>
+          initial={{ y: '100%' }} animate={{ y: '0%' }} exit={{ y: '-100%' }} transition={{ duration: 0.45, ease: EASE }}>{/* 11/2: 흐림 빼고 위로 깔끔하게 밀려 바뀜 (흐림은 짤에서 뭉개져 보임) */}
           {words[i]}
         </motion.span>
       </AnimatePresence>

@@ -1,11 +1,11 @@
 import { motion, useTransform, type MotionValue } from 'motion/react'
 import type { ReactNode } from 'react'
-import { CgCap, Logo, seg, useLoop } from '../v3/ui'
+import { Logo, seg, useLoop } from '../v3/ui'
 
-/* 새소식 이미지 · 체험단 7명 모집 (11/4 발행) — 상세페이지 v3와 같은 디자인, 위아래 끝은 흰색 */
+/* 새소식 이미지 · 체험단 7명 모집 (11/4 발행) — 11/2: 제목 문구는 새소식 글 제목으로 옮기고, 거실 3D 그림은 뺌. 새소식은 글 사이에 들어가서 흰 그라데이션 없이 */
 
 const CHECK = <svg viewBox="0 0 24 24" className="size-[22px] shrink-0" fill="none"><circle cx="12" cy="12" r="10.5" stroke="#8C6E5C" strokeWidth="1.3" /><path d="m7.5 12.3 3 3 6-6.3" stroke="#6B5245" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-const IVORY = 'bg-[linear-gradient(to_bottom,#FFFFFF_0px,#F7F2EA_140px,#F7F2EA_calc(100%_-_140px),#FFFFFF_100%)]'
+const IVORY = 'bg-[#F7F2EA]'
 
 /* 일정: 3초마다 선이 왼쪽부터 차오르며 날짜가 하나씩 켜짐 → 잠깐 머묾 → 함께 옅어짐 */
 const STEPS: [string, string, string][] = [
@@ -54,20 +54,14 @@ function Head({ children }: { children: ReactNode }) {
 
 export function Recruit() {
   return (
-    <section data-cap="news_체험단모집" data-tone="light" className={`relative overflow-hidden px-6 pb-[88px] pt-[76px] text-center ${IVORY}`}>
+    <section data-cap="news_체험단모집" data-tone="light" className={`relative overflow-hidden px-6 py-[52px] text-center ${IVORY}`}>
       <Logo className="h-[13px] text-mocha-d" />
       <p className="mx-auto mt-7 w-fit rounded-full bg-mocha-d px-4 py-[7px] text-[14px] font-semibold text-white">오픈 전 체험단 모집</p>
-      <h2 className="mt-6 text-[35px] font-medium leading-[1.34] tracking-[-0.04em] text-ink">우리 집 TV로<br />먼저 써볼 <b className="font-extrabold text-mocha-d">7분</b>을 찾습니다</h2>
-      <p className="mt-4 text-[16px] leading-[1.65] text-sub">다큐 턴패드 2-POINT를 오픈 전에 먼저 써보고<br />솔직한 후기를 남겨주세요.</p>
-
-      {/* 거실장 위 TV가 돌아간 모습 */}
-      <div className="relative -mx-6 mt-9 aspect-[4/3] overflow-hidden">
-        <img src="/3d/tv_02_turn_right.png" alt="거실장 위에서 각도를 바꾼 TV와 두 패드" className="absolute inset-0 size-full object-cover" />
-      </div>
-      <CgCap />
+      <h2 className="mt-6 text-[35px] font-medium leading-[1.34] tracking-[-0.04em] text-ink">턴패드 2-POINT<br /><b className="font-extrabold text-mocha-d">체험단 7분 모집</b></h2>
+      <p className="mt-4 text-[16px] leading-[1.65] text-sub">거실장 위 우리 집 TV로 먼저 써 보고<br />솔직한 후기를 남겨 주세요.</p>
 
       {/* 보내드리는 것 */}
-      <div className="mt-8 overflow-hidden rounded-[14px] bg-paper text-left shadow-[0_10px_28px_rgba(42,36,34,.07)] ring-1 ring-line">
+      <div className="mt-9 overflow-hidden rounded-[14px] bg-paper text-left shadow-[0_10px_28px_rgba(42,36,34,.07)] ring-1 ring-line">
         <div className="relative aspect-[16/9]">
           <img src="/3d/kit_06_angle_dark.jpg" alt="2-POINT 1세트 구성: 상판 2, 하판 2, 연결 핀 2" className="absolute inset-0 size-full object-cover" />
         </div>
@@ -77,7 +71,7 @@ export function Recruit() {
             <p className="mt-1 text-[18px] font-bold text-ink">2-POINT 1세트</p>
             <p className="mt-0.5 text-[13.5px] text-sub">상판 2 · 하판 2 · 연결 핀 2</p>
           </div>
-          <span className="shrink-0 rounded-full bg-mocha-d px-3 py-1.5 text-[13px] font-bold text-white">반납 없음</span>
+          <span className="shrink-0 rounded-full bg-mocha-d px-3 py-1.5 text-[13px] font-bold text-white">제품 제공</span>
         </div>
       </div>
 
