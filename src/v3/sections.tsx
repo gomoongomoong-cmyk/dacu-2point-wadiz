@@ -212,7 +212,7 @@ export function Offer() {
         <div className="px-6 pb-6 pt-6">
           <p className="text-[19px] font-bold text-ink">다큐 턴패드 2-POINT 1세트</p>
           <ul className="mt-3 flex flex-col gap-1.5 text-[15px] text-text">
-            {['상판 2 · 하판 2 · 연결 핀 2', '인조가죽 시트 1장 (아이보리, 모카 중 선택)', '기간 제한 없는 무상 A/S'].map(t => (
+            {['상판 2 · 하판 2 · 연결 핀 2', '선물: 인조가죽 시트 1장 (아이보리 또는 모카)', '기간 제한 없는 무상 A/S'].map(t => (
               <li key={t} className="flex items-center gap-2"><span className="flex size-[15px] items-center justify-center rounded-full border border-mocha/60 text-[12px] leading-none text-mocha">+</span>{t}</li>
             ))}
           </ul>
@@ -803,17 +803,24 @@ export function Fit() {
 
 /* 색상 */
 export function Colors() {
-  // 11/3 회의: 패드는 화이트 한 가지. 아이보리나 모카 인조가죽 시트 1장을 함께 드리고, 상판에 맞춰 잘라 붙임
+  // 11/3 회의: 판매는 화이트 한 가지. 펀딩하신 분께 아이보리나 모카 인조가죽 시트 1장을 선물로 드리고, 상판에 맞춰 잘라 붙임
+  // (와디즈는 '사은품' 같은 판매 용어를 피하라고 해서 '선물'로 씀)
   const cs: [string, string, string, string][] = [
     ['화이트', '#FFFFFF', '기본 그대로, 흰색이나 밝은 거실장에', 'white'],
-    ['아이보리', '#F3EDE3', '시트를 붙이면, 베이지나 밝은 원목에', 'ivory'],
-    ['모카', '#8A6A52', '시트를 붙이면, 짙은 원목 거실장에', 'mocha'],
+    ['아이보리', '#F3EDE3', '선물 시트를 붙이면, 베이지나 밝은 원목에', 'ivory'],
+    ['모카', '#8A6A52', '선물 시트를 붙이면, 짙은 원목 거실장에', 'mocha'],
   ]
   return (
     <Section cap="19_색상" tone="ivory" cg>
-      <Serif>White, and one more color</Serif>
-      <div className="mt-3"><Heading lead="기본은 화이트">거실장 색에 맞춰<br /><b className="text-mocha">시트 한 장</b>을 더 드립니다</Heading></div>
-      <Body>패드는 화이트로 보내드립니다.<br />아이보리와 모카 중 <b>가죽 질감의 시트</b> 한 장을 골라 주세요.<br />상판 크기에 맞춰 잘라 붙이면 됩니다.</Body>
+      <Serif>A small gift for you</Serif>
+      {/* 선물 알약: 3초마다 살짝 통 튐 */}
+      <motion.p className="mx-auto mt-4 flex w-fit items-center gap-1.5 rounded-full bg-mocha-d px-4 py-[7px] text-[14px] font-semibold text-white"
+        animate={{ scale: [1, 1.08, 1, 1] }} transition={{ duration: 3, times: [0, 0.12, 0.26, 1], ease: 'easeInOut', repeat: Infinity }}>
+        <svg viewBox="0 0 16 16" className="size-[15px]" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"><rect x="2" y="6" width="12" height="8" rx="1" /><path d="M1.5 6h13M8 6v8M8 6C6.5 3 3.5 3.5 4.5 5.2 5.2 6 8 6 8 6zm0 0c1.5-3 4.5-2.5 3.5-.8C10.8 6 8 6 8 6z" /></svg>
+        펀딩하신 모든 분께
+      </motion.p>
+      <div className="mt-5"><Heading lead="패드는 화이트, 그리고 선물 하나">인조가죽 시트<br /><b className="text-mocha">한 장 더</b> 드립니다</Heading></div>
+      <Body>2-POINT는 화이트로 보내드립니다.<br />여기에 아이보리나 모카 <b>인조가죽 시트</b> 한 장을<br />선물로 함께 넣어 드려요.<br />상판 크기에 맞춰 잘라 붙이면 거실장 색에 맞출 수 있습니다.</Body>
       {/* 한눈에: 위에서 본 세 색 패드 — 아래 색 이름과 같은 열에 놓임 */}
       <Slot kind="사진" what="세 가지 색 패드를 위에서" how="3D · 화이트 · 아이보리 · 모카 나란히" code="C11-2" src="/3d/color_trio_top.jpg" noTag round className="mt-8 aspect-square" />
       <div className="mt-4 grid grid-cols-3">
@@ -821,7 +828,7 @@ export function Colors() {
           <p key={n} className="flex flex-col items-center justify-center gap-1 text-[15px] font-semibold">
             <span className="flex items-center gap-2"><motion.i className="size-4 rounded-full border border-[#D5CEC4]" style={{ background: c }}
               animate={{ scale: [1, 1.25, 1] }} transition={{ duration: 3, times: [0, .15, .3], ease: 'easeInOut', repeat: Infinity, delay: i * 0.4 }} />{n}</span>
-            <span className="text-[12.5px] font-medium text-mute">{i ? '시트 선택' : '기본'}</span>
+            <span className="text-[12.5px] font-medium text-mute">{i ? '선물 시트' : '기본'}</span>
           </p>
         ))}
       </div>
@@ -1021,10 +1028,10 @@ export function QnA() {
 /* 제품 상세정보 (어두운 표) */
 export function Spec() {
   const spec: [string, ReactNode][] = [
-    ['제품명', '다큐 턴패드 2-POINT'], ['구성', '상판 2, 하판 2, 연결 핀 2, 인조가죽 시트 1'],
+    ['제품명', '다큐 턴패드 2-POINT'], ['구성', '상판 2, 하판 2, 연결 핀 2'], ['선물', '인조가죽 시트 1장 (아이보리 또는 모카 중 선택)'],
     ['상판', <>350 × 100 × 10mm<br />UHMWPE, 인조가죽 시트지 마감</>],
     ['하판', <>500 × 130 × 5mm · 곡선 홈<br />PTFE, 바닥 미끄럼 방지 실리콘<br />거실장 폭에 맞춰 길이를 줄여 드림</>],
-    ['연결 핀', 'Ø10 × 13mm · UHMWPE'], ['두께', '15mm (상판 10mm + 하판 5mm)'], ['색상', <>화이트<br />함께 드리는 인조가죽 시트: 아이보리, 모카 중 1장</>],
+    ['연결 핀', 'Ø10 × 13mm · UHMWPE'], ['두께', '15mm (상판 10mm + 하판 5mm)'], ['색상', '화이트'],
     ['맞는 TV', <>다리가 좌우로 분리된 TV</>],
     ['디자인권', <>등록 제30-1267775호<br />출원 30-2026-0034869 (2-POINT)</>], ['제조', '국내 CNC 가공'], ['판매원', '비티엠이앤씨 (브랜드 DACU)'],
   ]
