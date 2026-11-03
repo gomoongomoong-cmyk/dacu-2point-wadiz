@@ -592,7 +592,7 @@ export function Point04() {
 
       {/* 소재 카드: 사진 위에 아이콘 원이 걸쳐 있는 구성 */}
       <div className="mt-9 overflow-hidden rounded-[10px] bg-paper text-center shadow-[0_8px_24px_rgba(42,36,34,.05)] ring-1 ring-line">
-        <Slot kind="사진" what="상판·하판 표면 결 클로즈업" how="두 판이 맞닿은 단면 · 사선 조명으로 질감 · 매크로 · 인조가죽 마감 면과 판 단면이 함께 보이게" code="B3" src="/3d/open_c1.gif" noTag capOff className="aspect-[4/3]" />
+        <Slot kind="사진" what="상판·하판 표면 결 클로즈업" how="두 판이 맞닿은 단면 · 사선 조명으로 질감 · 매크로 · 상판 면과 판 단면이 함께 보이게" code="B3" src="/3d/open_c1.gif" noTag capOff className="aspect-[4/3]" />
         <div className="relative px-5 pb-7 pt-12">
           <span className="absolute left-1/2 top-0 flex size-[62px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-paper shadow-[0_0_0_6px_rgba(247,242,234,.9)]">
             <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="#6B5245" strokeWidth="1.6" strokeLinejoin="round"><path d="M12 3 2.5 8 12 13l9.5-5z" /><path d="m2.5 12.5 9.5 5 9.5-5" /><path d="m2.5 16.5 9.5 5 9.5-5" opacity=".45" /></svg>
@@ -803,7 +803,7 @@ export function Fit() {
 
 /* 색상 */
 export function Colors() {
-  // 11/3 회의: 판매는 화이트 한 가지. 펀딩하신 분께 아이보리나 모카 인조가죽 시트 1장을 선물로 드리고, 상판에 맞춰 잘라 붙임
+  // 11/3 회의: 판매는 화이트 한 가지(상판은 시트 없이 원래 화이트). 펀딩하신 분께 아이보리나 모카 인조가죽 시트 1장을 선물로 드리고, 상판에 맞춰 잘라 붙임
   // (와디즈는 '사은품' 같은 판매 용어를 피하라고 해서 '선물'로 씀)
   const cs: [string, string, string, string][] = [
     ['화이트', '#FFFFFF', '기본 그대로, 흰색이나 밝은 거실장에', 'white'],
@@ -1029,7 +1029,7 @@ export function QnA() {
 export function Spec() {
   const spec: [string, ReactNode][] = [
     ['제품명', '다큐 턴패드 2-POINT'], ['구성', '상판 2, 하판 2, 연결 핀 2'], ['선물', '인조가죽 시트 1장 (아이보리 또는 모카 중 선택)'],
-    ['상판', <>350 × 100 × 10mm<br />UHMWPE, 인조가죽 시트지 마감</>],
+    ['상판', <>350 × 100 × 10mm<br />UHMWPE, 화이트</>],
     ['하판', <>500 × 130 × 5mm · 곡선 홈<br />PTFE, 바닥 미끄럼 방지 실리콘<br />거실장 폭에 맞춰 길이를 줄여 드림</>],
     ['연결 핀', 'Ø10 × 13mm · UHMWPE'], ['두께', '15mm (상판 10mm + 하판 5mm)'], ['색상', '화이트'],
     ['맞는 TV', <>다리가 좌우로 분리된 TV</>],
@@ -1040,12 +1040,12 @@ export function Spec() {
     ['교환·환불', <>배송 완료일로부터 7일 안에<br />단순 변심 환불을 신청하실 수 있습니다.<br />아래의 경우 단순 변심에 의한 반품·환불이 어려울 수 있습니다.
       <ul className="mt-1.5 flex flex-col gap-1">{[
         '구성품(상판 2, 하판 2, 연결 핀 2) 중 일부가 빠진 경우',
-        '사용으로 인해 상판 시트지에 오염·찢김·들뜸이 생기거나, 하판 바닥의 미끄럼 방지 실리콘이 분리·손상된 경우',
+        '선물 시트를 상판에 붙였거나, 사용으로 인해 하판 바닥의 미끄럼 방지 실리콘이 분리·손상된 경우',
         '거실장 폭에 맞춰 하판 길이를 줄여 보내드린 경우',
         '안내된 사용 환경(평평한 거실장 위, 다리가 좌우로 분리된 TV) 외의 용도로 사용하다 파손된 경우',
       ].map(t => <li key={t} className="flex gap-1.5"><span>·</span><span>{t}</span></li>)}</ul>
       <span className="mt-1.5 block">소재 특성상 표면에 미세한 결이 보일 수 있으며,<br />이는 제품 불량이 아닙니다.</span></>],
-    ['A/S', <>기간 제한 없이 무상 A/S를 제공합니다.<br />정상적인 사용 중 생긴 하자(파손, 변형, 시트지 들뜸 등)는 기간과 관계없이 무상으로 부품 교체 또는 제품 교환해 드립니다.<br />사용자 부주의나 안내된 사용 환경 외 사용으로 인한 손상은 유상으로 처리될 수 있습니다.<br />A/S 왕복 배송비는 서포터님 부담입니다. 단, 수령 직후 발견한 초기 불량이나 오배송은 메이커가 부담합니다.</>],
+    ['A/S', <>기간 제한 없이 무상 A/S를 제공합니다.<br />정상적인 사용 중 생긴 하자(파손, 변형 등)는 기간과 관계없이 무상으로 부품 교체 또는 제품 교환해 드립니다.<br />사용자 부주의나 안내된 사용 환경 외 사용으로 인한 손상은 유상으로 처리될 수 있습니다.<br />A/S 왕복 배송비는 서포터님 부담입니다. 단, 수령 직후 발견한 초기 불량이나 오배송은 메이커가 부담합니다.</>],
     ['A/S 접수', <>비티엠이앤씨 고객센터 <b className="font-semibold text-white">061-333-8386</b><br />수원 사무실 <b className="font-semibold text-white">031-205-8386</b><br />접수 시 제품 사진이나 영상을 요청드릴 수 있습니다.</>],
     ['사용 주의', <>평평한 곳에서 쓰고, 무리하게 빠르게 돌리지 말고,<br />케이블 여유 길이를 확인해 주세요.</>],
   ]
