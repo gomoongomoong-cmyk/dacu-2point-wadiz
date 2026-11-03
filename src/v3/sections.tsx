@@ -779,7 +779,7 @@ export function Fit() {
       </div>
       <Fig><PadSize /></Fig>
       <Body>TV 다리 바닥이 <b>상판(100 × 350mm)</b> 위에<br />올라가는지 확인해 주세요.</Body>
-      {/* 11/3 회의: 거실장 앞뒤 폭이 하판(500mm)보다 좁으면 펀딩할 때 폭을 받아 하판을 줄여 보냄 + TV 다리 사이 간격(선택) — 흰 띠에서 따로 한 장 */}
+      {/* 11/3 회의: 거실장 앞뒤 폭이 하판(500mm)보다 좁으면 펀딩할 때 폭을 받아 하판을 줄여 보냄 — 흰 띠에서 따로 한 장 (TV 다리 사이 간격 줄은 11/3 뺌) */}
       <Break h={140} className="mt-10 mb-2" />
       <Heading lead="거실장 폭이 50cm보다 좁다면">하판 길이를 줄여<br /><b>거실장에 맞춰</b> 보내드립니다</Heading>
       <Fig><CabinetTrim /></Fig>
@@ -787,7 +787,7 @@ export function Fit() {
       <div className="mt-7 rounded-[12px] bg-white/60 px-5 py-5 text-left">
         <p className="text-[15.5px] font-bold text-ink">펀딩할 때 적어 주세요</p>
         <dl className="mt-3 flex flex-col gap-2.5 text-[15px]">
-          {[['거실장 앞뒤 폭', '50cm보다 좁을 때'], ['TV 다리 사이 간격', '선택']].map(([k, v]) => (
+          {[['거실장 앞뒤 폭', '50cm보다 좁을 때']].map(([k, v]) => (
             <div key={k} className="flex items-baseline justify-between gap-3"><dt className="text-text">{k}</dt><dd className="text-[13.5px] text-mute">{v}</dd></div>
           ))}
         </dl>
