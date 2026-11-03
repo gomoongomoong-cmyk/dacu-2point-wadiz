@@ -760,7 +760,9 @@ function TvIcon({ legs }: { legs: 'two' | 'center' }) {
 }
 export function Fit() {
   return (
-    <Section cap="18_맞는TV" tone="sand">
+    <Section cap="18_맞는TV">
+      {/* 11/3: 첫 장(맞는 TV + 패드 크기)은 그라데이션 없이 흰 바탕 */}
+      <div className="-mx-6 -mt-[72px] bg-paper px-6 pb-[72px] pt-[72px]">
       <DetailTag n={7} label="FIT" />
       <Heading lead="펀딩 전에 확인하세요">우리 집 TV에<br /><b>맞을까요?</b></Heading>
       <div className="mt-9 grid grid-cols-2 gap-2">
@@ -770,7 +772,7 @@ export function Fit() {
           <p className="mt-1 text-[16px] font-bold leading-[1.45] text-ink">다리가 양쪽으로<br />나뉜 TV</p>
           <p className="mt-2 text-[13px] leading-[1.6] text-sub">두 다리 아래에<br />패드를 하나씩 놓습니다</p>
         </div>
-        <div className="rounded-[10px] bg-paper/60 px-3 pb-6 pt-7">
+        <div className="rounded-[10px] bg-[#F5F0E9] px-3 pb-6 pt-7">
           <div className="opacity-45"><TvIcon legs="center" /></div>
           <p className="mt-4 text-[14px] font-bold text-mute">권하지 않습니다</p>
           <p className="mt-1 text-[16px] font-bold leading-[1.45] text-sub">가운데 스탠드<br />하나인 TV</p>
@@ -779,8 +781,10 @@ export function Fit() {
       </div>
       <Fig><PadSize /></Fig>
       <Body>TV 다리 바닥이 <b>상판(100 × 350mm)</b> 위에<br />올라가는지 확인해 주세요.</Body>
-      {/* 11/3 회의: 거실장 앞뒤 폭이 하판(500mm)보다 좁으면 펀딩할 때 폭을 받아 하판을 줄여 보냄 — 흰 띠에서 따로 한 장 (TV 다리 사이 간격 줄은 11/3 뺌) */}
-      <Break h={140} className="mt-10 mb-2" />
+      </div>
+      {/* 11/3 회의: 거실장 앞뒤 폭이 하판(500mm)보다 좁으면 펀딩할 때 폭을 받아 하판을 줄여 보냄 — 흰 여백에서 따로 한 장 (TV 다리 사이 간격 줄은 11/3 뺌) */}
+      <div data-cut aria-hidden className="h-0" />
+      <div className="-mx-6 -mb-[72px] bg-[linear-gradient(to_bottom,#FFFFFF_0px,#F7F2EA_140px,#EFE6DA_calc(100%_-_140px),#FFFFFF_100%)] px-6 pb-[72px] pt-[72px]">
       <Heading lead="거실장 폭이 50cm보다 좁다면">하판 길이를 줄여<br /><b>거실장에 맞춰</b> 보내드립니다</Heading>
       <Fig><CabinetTrim /></Fig>
       <Body>하판 길이는 500mm입니다.<br />거실장 앞뒤 폭이 이보다 좁으면<br />펀딩할 때 폭을 적어 주세요.</Body>
@@ -791,6 +795,7 @@ export function Fit() {
             <div key={k} className="flex items-baseline justify-between gap-3"><dt className="text-text">{k}</dt><dd className="text-[13.5px] text-mute">{v}</dd></div>
           ))}
         </dl>
+      </div>
       </div>
     </Section>
   )
