@@ -388,7 +388,7 @@ export function Point01() {
         <Body dark className="!mt-0">두 패드가 TV의 두 다리를 하나씩 받쳐<br />TV는 원래 서 있던 자세 그대로 섭니다.<br /><b>바뀌는 것은 각도뿐입니다.</b></Body>
       </div>
       <div className="mt-8"><FrontPoints /></div>
-      <Slot kind="GIF" what="TV를 손으로 밀어도 흔들림 없이 각도만 바뀌는 장면" how="가장 중요한 컷 · 삼각대 고정 · TV 윗부분까지 화면에 다 들어오게 · 손이 TV 옆면을 밀고 멈출 때까지 · 원본 10초 → GIF 2~3초 발췌" code="A5" src="/photo/pad_turn_real_169_b.gif" noTag bleed className="aspect-video" />
+      <Slot kind="GIF" what="TV를 손으로 밀어도 흔들림 없이 각도만 바뀌는 장면" how="가장 중요한 컷 · 삼각대 고정 · TV 윗부분까지 화면에 다 들어오게 · 손이 TV 옆면을 밀고 멈출 때까지 · 원본 10초 → GIF 2~3초 발췌" code="A5" src="/photo/r_0923.gif" noTag bleed className="aspect-video" />
       <div className="mt-6 flex flex-col gap-2">
         {checks.map(([b, s], i) => (
           <div key={b} className="flex items-center gap-4 rounded-[8px] bg-white/[.06] px-4 py-3.5">

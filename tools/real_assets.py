@@ -81,10 +81,10 @@ def set_delays(path, cs):
     path.write_bytes(bytes(b))
 
 
-def clip(vi, start, length, name, ratio, width, fps=10, cx=0.5, cy=0.5, zoom=1.0, fade=0.6, limit=3_000_000, rot=None, ext_top=0.0, smooth=1.0, speed=1.0, stab=True):
+def clip(vi, start, length, name, ratio, width, fps=10, cx=0.5, cy=0.5, zoom=1.0, fade=0.6, limit=3_000_000, rot=None, ext_top=0.0, smooth=1.0, speed=1.0, stab=True, screen=True, pingpong=False):
     """영상 vi의 start초부터 length초 → 끊김 없이 반복하는 짤"""
     cap = cv2.VideoCapture(str(VIDEOS[vi] if isinstance(vi, int) else vi)); src_fps = cap.get(cv2.CAP_PROP_FPS) or 24
-    n = round(length * fps); x = round(fade * fps)
+    n = round(length * fps); x = 0 if pingpong else round(fade * fps)  # pingpong: 앞으로 갔다 거꾸로 돌아옴 (카메라가 움직이는 영상은 겹쳐 녹이면 이중으로 보임)
     frs = []
     for k in range(n + x):
         cap.set(cv2.CAP_PROP_POS_FRAMES, round((start + k / fps * speed) * src_fps)); ok, fr = cap.read()  # speed<1 = 살짝 느리게(짧은 영상을 6초로)
@@ -112,7 +112,7 @@ def clip(vi, start, length, name, ratio, width, fps=10, cx=0.5, cy=0.5, zoom=1.0
     for i in range(1, len(frs) if stab else 0):  # stab=False: 직접 자른 영상은 보정 안 함(보정이 왜곡을 만듦)
         frs[i] = cv2.warpPerspective(frs[i], P[i].reshape(3, 3), (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     # 화면 모서리를 프레임마다 찾되, 시간 축으로 부드럽게 이어서 검은 면이 커졌다 작아졌다 하지 않게
-    qs = [screen_quad(f) for f in frs]
+    qs = [screen_quad(f) for f in frs] if screen else [np.zeros((4, 2), np.float32)] * len(frs)  # screen=False: 원래 꺼진 화면이라 칠하지 않음
     ok_i = [i for i, q in enumerate(qs) if q is not None]
     Q = np.array([qs[i] if qs[i] is not None else qs[min(ok_i, key=lambda j: abs(j - i))] for i in range(len(qs))])
     mw = int(4 * smooth); gw = int(7 * smooth)
@@ -126,11 +126,12 @@ def clip(vi, start, length, name, ratio, width, fps=10, cx=0.5, cy=0.5, zoom=1.0
         blue = cv2.inRange(cv2.cvtColor(f, cv2.COLOR_BGR2HSV), (95, 90, 70), (130, 255, 255))
         blue = cv2.morphologyEx(blue, cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
         return quad_mask(f.shape, q, f) | cv2.dilate(blue, np.ones((7, 7), np.uint8))
-    raw = [crop(blackout(f, mask_of(f, q)), ratio, cx, cy, zoom).astype(np.float32) for f, q in zip(frs, Q)]
+    raw = [crop(blackout(f, mask_of(f, q)) if screen else f, ratio, cx, cy, zoom).astype(np.float32) for f, q in zip(frs, Q)]
     out = []
     for i in range(n):  # 처음 fade초 = 끝부분이 처음으로 녹아드는 구간
         f = raw[i] if i >= x else raw[n + i] * (1 - i / x) + raw[i] * (i / x)
         out.append(np.clip(f, 0, 255).astype(np.uint8))
+    if pingpong: out = out + out[::-1]  # 양 끝 한 장씩 겹쳐 잠깐 멈춤 · 길이가 정확히 2배(6초 박자)
     # 찌직거림 없애기: 움직이지 않는 곳(벽·거실장)은 모든 장에서 같은 한 장(시간 중앙값)으로 고정
     # (TV·손이 한 번이라도 지나간 자리는 고정하지 않음 → 테두리가 깨지지 않음)
     stack = np.stack(out); bg = np.median(stack, axis=0).astype(np.float32)
@@ -166,7 +167,7 @@ def clip(vi, start, length, name, ratio, width, fps=10, cx=0.5, cy=0.5, zoom=1.0
         im.filter(ImageFilter.UnsharpMask(radius=1.4, percent=70, threshold=2)).save(tmp / f'f_{k:04d}.png')
     path = OUT / name
     cs, acc = [], 0.0
-    for _ in range(n):
+    for _ in range(len(out)):
         nxt = acc + 100 / fps; cs.append(round(nxt) - round(acc)); acc = nxt
     # 팔레트는 전체에서 한 번만 (장마다 색이 바뀌어 반짝이는 것 방지)
     for colors, dither in ((256, 'bayer:bayer_scale=5'), (256, 'bayer:bayer_scale=4'), (224, 'bayer:bayer_scale=4'), (192, 'bayer:bayer_scale=3'), (160, 'bayer:bayer_scale=3')):
@@ -237,6 +238,8 @@ JOBS = {
     'r_hero': lambda: clip(0, 0.0, 6.0, 'r_hero.gif', 16 / 9, 860, zoom=1.03, limit=7_000_000),  # 양쪽에서 미는 손이 다 보이게 원본 비율 그대로
     # 안정감: 다른 장면으로 한 번 더 (6초, 16:9)
     'r_stable': lambda: clip(2, 7.8, 6.0, 'r_stable.gif', 16 / 9, 860, cx=0.56, cy=0.12, zoom=1.15, limit=7_000_000, smooth=1.8),  # 히어로 후보: TV 전체가 도는 정면(왼쪽 잡동사니 잘라 냄)
+    # 안정감: 9월 영상 0923 (1) — 손으로 밀면 패드 위 TV 다리가 돌아감 (TV는 원래 꺼진 화면, 3.5초 영상 → 3초 갔다 3초 돌아오는 6초 반복)
+    'r_0923': lambda: clip(ROOT.parent / '02_원본_사진영상' / '받은이미지_9월' / '0923 (1).mp4', 0.0, 3.0, 'r_0923.gif', 16 / 9, 860, fps=8, cx=0.45, cy=0.5, zoom=1.35, limit=8_000_000, screen=False, stab=False, pingpong=True),
     # 미끄럼 방지: 하판은 그대로, 윗판만 도는 클로즈업 (3초, 4:3)
     'r_grip': lambda: clip(3, 5.08, 3.0, 'r_grip.gif', 4 / 3, 720, cy=0.47),
 }
