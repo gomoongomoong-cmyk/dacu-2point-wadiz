@@ -787,11 +787,11 @@ export function Fit() {
       <div className="-mx-6 -mb-[72px] bg-[linear-gradient(to_bottom,#FFFFFF_0px,#F7F2EA_140px,#EFE6DA_calc(100%_-_140px),#FFFFFF_100%)] px-6 pb-[72px] pt-[72px]">
       <Heading lead="거실장 폭이 50cm보다 좁다면">하판 길이를 줄여<br /><b>거실장에 맞춰</b> 보내드립니다</Heading>
       <Fig><CabinetTrim /></Fig>
-      <Body>하판 길이는 500mm입니다.<br />거실장 앞뒤 폭이 이보다 좁으면<br />펀딩할 때 옵션에서 골라 주세요.<br />정확한 폭은 펀딩이 끝난 뒤 여쭤봅니다.</Body>
+      <Body>하판 길이는 500mm입니다.<br />거실장 앞뒤 폭이 이보다 좁으면<br />펀딩할 때 옵션 칸에 폭을 적어 주세요.</Body>
       <div className="mt-7 rounded-[12px] bg-white/60 px-5 py-5 text-left">
-        <p className="text-[15.5px] font-bold text-ink">펀딩할 때 옵션에서 골라 주세요</p>
+        <p className="text-[15.5px] font-bold text-ink">펀딩할 때 옵션 칸에 적어 주세요</p>
         <dl className="mt-3 flex flex-col gap-2.5 text-[15px]">
-          {[['거실장 앞뒤 폭', '50cm 미만 선택']].map(([k, v]) => (
+          {[['거실장 앞뒤 폭', '50cm보다 좁을 때']].map(([k, v]) => (
             <div key={k} className="flex items-baseline justify-between gap-3"><dt className="text-text">{k}</dt><dd className="text-[13.5px] text-mute">{v}</dd></div>
           ))}
         </dl>
@@ -998,7 +998,7 @@ export function Maker() {
 export function QnA() {
   const qa: [string, ReactNode][] = [
     ['우리 집 TV에 맞나요?', <>다리가 좌우로 나뉜 TV라면 쓸 수 있습니다.<br />두 패드를 다리 간격에 맞춰 놓으면 됩니다.</>],
-    ['거실장 폭이 하판보다 좁으면요?', <>하판 길이는 500mm입니다.<br />거실장 앞뒤 폭이 이보다 좁으면 펀딩할 때 옵션에서 골라 주세요.<br />펀딩이 끝난 뒤 정확한 폭을 여쭤보고 하판을 줄여 보내드립니다.</>],
+    ['거실장 폭이 하판보다 좁으면요?', <>하판 길이는 500mm입니다.<br />거실장 앞뒤 폭이 이보다 좁으면 펀딩할 때 옵션 칸에 적어 주세요.<br />그 길이에 맞춰 하판을 줄여 보내드립니다.</>],
     ['가운데 스탠드 하나로 서는 TV도 되나요?', <>2-POINT는 두 다리를 각각 받치는 구조라<br />다리가 좌우로 나뉜 TV에 맞춰 만들었습니다.</>],
     ['흔들리거나 넘어지지 않나요?', <>두 다리를 각각 받치기 때문에<br />TV는 원래 서 있던 그대로 섭니다.<br />평평한 거실장 위에서 써주세요.</>],
     ['거실장이 긁히거나 패드가 밀리지 않나요?', <>하판 바닥의 미끄럼 방지 실리콘이 거실장을 붙잡아<br />패드는 그대로 있고 위의 상판만 움직입니다.</>],
