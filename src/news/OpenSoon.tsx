@@ -49,7 +49,7 @@ function CoffeeEvent() {
       <div className="relative mx-auto mt-9 w-[118px]">
         {/* 컵만 잘라 둔 그림이라 정확히 가운데 · 그림자는 따로 */}
         <span className="absolute -bottom-2 left-1/2 h-[14px] w-[150px] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(closest-side,rgba(90,70,59,.28),rgba(90,70,59,0))]" />
-        <img src="/photo/iced_americano_cup.png" alt="아이스 아메리카노" className="relative block w-full" />
+        <img src="/photo/iced_americano_plain.png" alt="아이스 아메리카노" className="relative block w-full" />
         {/* 추첨 10분: 위 알약과 같은 단색 모카 스티커 — 살짝 기울여 컵 오른쪽 아래(그림자 잘린 곳)를 덮음 · 3초마다 살짝 통 튐 */}
         <motion.div className="absolute -bottom-2 left-[calc(100%-42px)] flex size-[96px] flex-col items-center justify-center rounded-full bg-mocha-d text-white shadow-[0_12px_24px_-10px_rgba(42,36,34,.55)]"
           style={{ rotate: -8 }} animate={{ scale: [1, 1.08, 1, 1] }} transition={{ duration: 3, times: [0, 0.12, 0.26, 1], ease: 'easeInOut', repeat: Infinity }}>

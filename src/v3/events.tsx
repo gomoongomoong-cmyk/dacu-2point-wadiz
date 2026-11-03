@@ -66,7 +66,8 @@ const DO_THREE = [
   <>커뮤니티에 <b className="font-semibold">펀딩번호와 응원 댓글</b> 남기기</>,
 ]
 
-/* 이벤트 3가지 (11/2: 번호 없이 따로따로 — 와디즈 스토리를 오픈예정용·본펀딩용으로 나눠 넣기 위해)
+/* 11/3: 커피 그림은 스타벅스 로고를 지운 컵 (AI 심사 "제3자 로고" 검토 의견)
+   이벤트 3가지 (11/2: 번호 없이 따로따로 — 와디즈 스토리를 오픈예정용·본펀딩용으로 나눠 넣기 위해)
    오픈예정 스토리: 커피 · 체험단 / 본펀딩 스토리: 페이백 */
 const LIGHT_BG = 'linear-gradient(to bottom, #FFFFFF 0px, #F6F0E6 140px, #F0E7DA calc(100% - 140px), #FFFFFF 100%)'
 
@@ -78,7 +79,7 @@ const COFFEE: Ev = {
   // 새소식과 같은 아이스 아메리카노 사진 + 추첨 10분 스티커
   icon: (
     <div className="relative mr-3 mt-1 w-[78px]">
-      <img src="/photo/iced_americano_cup.png" alt="스타벅스 아이스 아메리카노" className="block w-full drop-shadow-[0_10px_14px_rgba(0,0,0,.35)]" />
+      <img src="/photo/iced_americano_plain.png" alt="아이스 아메리카노" className="block w-full drop-shadow-[0_10px_14px_rgba(0,0,0,.35)]" />
       <span className="absolute -bottom-2 -right-7 flex size-[56px] rotate-[-8deg] flex-col items-center justify-center rounded-full bg-champagne text-espresso shadow-[0_8px_16px_-6px_rgba(0,0,0,.45)]">
         <span className="text-[10px] font-semibold text-mocha-d">추첨</span>
         <span className="-mt-0.5 text-[16px] font-extrabold tracking-[-0.03em]">10분</span>
