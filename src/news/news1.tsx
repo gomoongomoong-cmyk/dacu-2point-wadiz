@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import '../v3/index.css'
 import { Announce, CoffeeEvent } from './OpenSoon'
 import { Recruit } from './Recruit'
+import { Gift } from './Gift'
 
 /* 11/4 오픈예정 시작 때 올릴 새소식 3개의 이미지 — 새소식마다 이름표를 달아 위아래로 띄움 (이름표는 캡처되지 않음) */
 function Post({ n, title, children }: { n: number; title: string; children: ReactNode }) {
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
       <Post n={1} title="오픈예정 공개"><Announce /></Post>
       <Post n={2} title="알림신청 커피 이벤트"><CoffeeEvent /></Post>
       <Post n={3} title="체험단 7명 모집"><Recruit /></Post>
+      <Post n={4} title="펀딩 선물 인조가죽 시트 (11/3 추가)"><Gift /></Post>
     </main>
   </StrictMode>,
 )
