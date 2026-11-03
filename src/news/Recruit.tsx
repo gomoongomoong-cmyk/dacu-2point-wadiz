@@ -71,7 +71,7 @@ export function Recruit() {
             <p className="mt-1 text-[18px] font-bold text-ink">2-POINT 1세트</p>
             <p className="mt-0.5 text-[13.5px] text-sub">상판 2 · 하판 2 · 연결 핀 2</p>
           </div>
-          <span className="shrink-0 rounded-full bg-mocha-d px-3 py-1.5 text-[13px] font-bold text-white">제품 제공</span>
+          <span className="shrink-0 rounded-full bg-mocha-d px-3 py-1.5 text-[13px] font-bold text-white">먼저 제공</span>
         </div>
       </div>
 

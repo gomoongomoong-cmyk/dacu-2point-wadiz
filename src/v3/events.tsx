@@ -129,7 +129,7 @@ function TvTurn() {
 const RECRUIT: Ev = {
   cap: '02b_이벤트_체험단', when: '체험단 모집', bg: LIGHT_BG,
   title: <>우리 집 TV로<br />먼저 써 볼<br /><b>7분을 찾습니다</b></>,
-  desc: <>다큐 턴패드 2-POINT 1세트를 <b>제품으로 제공</b>해 드리고<br />우리 집 거실장 위에서 써 본 솔직한 후기를 받습니다.</>,
+  desc: <>다큐 턴패드 2-POINT 1세트를 <b>먼저 제공</b>해 드리고<br />우리 집 거실장 위에서 써 본 솔직한 후기를 받습니다.</>,
   icon: <TvTurn />,
   steps: [
     <>프로젝트 상단의 <b className="font-semibold">알림신청</b> 버튼 누르기</>,

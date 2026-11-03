@@ -1,5 +1,5 @@
 import { motion, useMotionValueEvent } from 'motion/react'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useLoop } from './ui'
 
 const inOut = (v: number, a: number, b: number) => { const t = Math.min(1, Math.max(0, (v - a) / (b - a))); return t * t * (3 - 2 * t) }
@@ -94,5 +94,65 @@ export function PadSize() {
       <text x={x0 + L + 20} y={y0 + W / 2 + 11} fontSize="10.5" fill="#6E625A">mm</text>
       <text x="172" y={y0 + W / 2 + 4} textAnchor="middle" fontSize="11" fill="#6B5245">상판 폭 100mm</text>
     </svg>
+  )
+}
+
+/** 거실장 폭 맞춤 (11/3 회의): 위에서 본 거실장. 하판(500mm)이 앞으로 나온 만큼 잘려 나가 거실장 폭에 꼭 맞음 — 3초 반복 */
+export function CabinetTrim() {
+  const p = useLoop(3)
+  const k = 0.4, D = 420 * k, L = 500 * k, W = 130 * k
+  const x0 = 30, y0 = 22, cw = 196, px = x0 + 70
+  const [c, setC] = useState(0)
+  useMotionValueEvent(p, 'change', v => setC(inOut(v, 0.3, 0.5) * (1 - inOut(v, 0.9, 0.98))))
+  const tick = (y1: number, y2: number, x: number) => `M${x} ${y1} V${y2} M${x - 5} ${y1} H${x + 5} M${x - 5} ${y2} H${x + 5}`
+  return (
+    <svg viewBox="0 0 344 236" className="w-full" aria-label="거실장 앞뒤 폭이 하판 500mm보다 좁으면, 앞으로 나오는 만큼 하판을 줄여 보내드립니다">
+      <path d={`M${x0 - 8} ${y0 - 7} H${x0 + cw + 8}`} stroke="#C9AE98" strokeWidth="3" strokeLinecap="round" />
+      <text x={x0 + cw + 14} y={y0 - 3} fontSize="10.5" fill="#8C7B6E">벽</text>
+      <rect x={x0} y={y0} width={cw} height={D} rx="4" fill="#EADFD1" stroke="#C9AE98" />
+      <text x={x0 + 10} y={y0 + D - 10} fontSize="10.5" fill="#8C7B6E">거실장 앞</text>
+      <rect x={px} y={y0} width={W} height={D} rx="3" fill="#FFFFFF" stroke="#B9A796" />
+      <rect x={px + (W - 40) / 2} y={y0 + (D - 140) / 2 + 4} width="40" height="140" rx="3" fill="#F3ECE3" stroke="#C9AE98" />
+      {/* 앞으로 나온 부분: 점선으로 보였다가 잘려 아래로 빠짐 */}
+      <g opacity={1 - c} transform={`translate(0 ${c * 16})`}>
+        <rect x={px} y={y0 + D} width={W} height={L - D} rx="3" fill="#F2E4D8" stroke="#A88B78" strokeDasharray="4 3" />
+        <text x={px - 8} y={y0 + D + (L - D) / 2 + 4} textAnchor="end" fontSize="10.5" fill="#8A6A52">밖으로 나온 만큼</text>
+      </g>
+      <path d={`M${px - 6} ${y0 + D} H${px + W + 6}`} stroke="#6B5245" strokeWidth="1.2" strokeDasharray="3 3" opacity={0.35 + 0.65 * Math.min(1, c * 3)} />
+      {/* 길이 표시: 500mm → 거실장 폭에 맞춘 길이 */}
+      <g stroke="#A88B78" strokeWidth="1" fill="none">
+        <path d={tick(y0, y0 + L, x0 + cw + 22)} opacity={1 - c} />
+        <path d={tick(y0, y0 + D, x0 + cw + 22)} opacity={c} />
+      </g>
+      <g fontSize="11" fill="#6E625A">
+        <text x={x0 + cw + 32} y={y0 + L - 2} opacity={1 - c}>하판 500mm</text>
+        <text x={x0 + cw + 32} y={y0 + D / 2 - 3} opacity={c} fill="#6B5245" fontWeight="700">거실장 폭에</text>
+        <text x={x0 + cw + 32} y={y0 + D / 2 + 12} opacity={c} fill="#6B5245" fontWeight="700">맞춘 길이</text>
+      </g>
+    </svg>
+  )
+}
+
+/** 물세척 (11/3 회의): 떼기 → 물로 씻기(물방울이 3초마다 떨어짐) → 말려서 끼우기 */
+export function WashSteps() {
+  const p = useLoop(3)
+  const [t, setT] = useState(0)
+  useMotionValueEvent(p, 'change', v => setT(v))
+  const drop = (d: number) => { const v = (t + d) % 1; return { y: 8 + v * 22, o: v < 0.75 ? 1 : (1 - v) * 4 } }
+  const plate = <rect x="10" y="40" width="44" height="7" rx="2" fill="#FFFFFF" stroke="#B9A796" />
+  const steps: [string, ReactNode][] = [
+    ['떼기', <>{plate}<rect x="16" y="22" width="32" height="7" rx="2" fill="#F3ECE3" stroke="#C9AE98" /><path d="M32 18 V8 M27 13 L32 8 L37 13" stroke="#6B5245" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" /></>],
+    ['물로 씻기', <>{[0, 0.33, 0.66].map((d, i) => { const { y, o } = drop(d); return <path key={i} d={`M${22 + i * 10} ${y} q-3 5 0 7 q3 -2 0 -7z`} fill="#8FB3C8" opacity={o} /> })}{plate}</>],
+    ['말려서 끼우기', <>{plate}<rect x="16" y="33" width="32" height="7" rx="2" fill="#F3ECE3" stroke="#C9AE98" /><path d="M24 18 l5 5 l10 -11" stroke="#6B5245" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></>],
+  ]
+  return (
+    <div className="mt-6 grid grid-cols-3 gap-2">
+      {steps.map(([n, g], i) => (
+        <div key={n} className="flex flex-col items-center rounded-[10px] bg-[#F7F2EA] px-2 pb-4 pt-3">
+          <svg viewBox="0 0 64 56" className="w-[84px]" aria-hidden>{g}</svg>
+          <p className="mt-1 text-[14px] font-semibold text-ink"><span className="mr-1 text-mocha">{i + 1}</span>{n}</p>
+        </div>
+      ))}
+    </div>
   )
 }

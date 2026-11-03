@@ -5,7 +5,7 @@ import { SKETCHES } from './devnoteSketches'
 import { REVIEWS } from './reviews'
 import { LOGO_DEFS, LOGO_GRID_DEFS, LOGO_MARK } from './brandLogo'
 import { Break, InfoPill, Blank, BlankFill, CgCap, Logo, Body, Crossfade, DetailTag, EASE, FillText, Heading, Label, Laurel, LightList, Marquee, Note, Reveal, RollNumber, Seal, Section, Serif, Sheen, Slot, Typewriter, Underline, VLine, WordRoll, seg, useLoop } from './ui'
-import { PadSize, RoomView } from './diagrams'
+import { CabinetTrim, PadSize, RoomView, WashSteps } from './diagrams'
 
 const won = (n: number) => n.toLocaleString('ko-KR')
 
@@ -212,7 +212,7 @@ export function Offer() {
         <div className="px-6 pb-6 pt-6">
           <p className="text-[19px] font-bold text-ink">다큐 턴패드 2-POINT 1세트</p>
           <ul className="mt-3 flex flex-col gap-1.5 text-[15px] text-text">
-            {['상판 2 · 하판 2 · 연결 핀 2', '색상 선택 (화이트 · 아이보리 · 모카)', '기간 제한 없는 무상 A/S'].map(t => (
+            {['상판 2 · 하판 2 · 연결 핀 2', '인조가죽 시트 1장 (아이보리, 모카 중 선택)', '기간 제한 없는 무상 A/S'].map(t => (
               <li key={t} className="flex items-center gap-2"><span className="flex size-[15px] items-center justify-center rounded-full border border-mocha/60 text-[12px] leading-none text-mocha">+</span>{t}</li>
             ))}
           </ul>
@@ -379,7 +379,7 @@ function FrontPoints() {
 }
 
 export function Point01() {
-  const checks = [['다리마다 패드 하나씩', 'TV의 무게를 두 점에 나눠 받칩니다'], ['바닥의 미끄럼 방지 줄', '거실장을 붙잡아 위의 상판만 움직입니다'], ['TV 자세는 그대로', '높이와 기울기는 바뀌지 않습니다']]
+  const checks = [['다리마다 패드 하나씩', 'TV의 무게를 두 점에 나눠 받칩니다'], ['바닥의 미끄럼 방지 실리콘', '거실장을 붙잡아 위의 상판만 움직입니다'], ['TV 자세는 그대로', '높이와 기울기는 바뀌지 않습니다']]
   return (
     <Section cap="10_D01_안정감" tone="dark" align="left">
       <DetailTag n={2} label="STABILITY" dark />
@@ -410,13 +410,13 @@ export function Grip() {
   const checks: ReactNode[] = [
     <>하판은 거실장 위 <b>제자리에</b></>,
     <>움직이는 건 위의 <b>상판뿐</b></>,
-    <>거실장에 닿는 면에는 <b>미끄럼 방지 줄</b></>,
+    <>거실장에 닿는 면에는 <b>미끄럼 방지 실리콘</b></>,
   ]
   return (
     <Section cap="11_미끄럼방지" tone="sand">
       <DetailTag n={3} label="GRIP" />
       <Heading lead="밀어도 밀리지 않도록"><Underline>거실장을 붙잡는</Underline><br />하판 바닥</Heading>
-      <Body>하판 바닥 홈에 미끄럼 방지 줄을 끼웠습니다.<br />TV를 밀어도 하판은 거실장 위에 그대로 있고<br /><b>움직이는 건 위의 상판뿐</b>입니다.</Body>
+      <Body>하판 바닥 홈에 미끄럼 방지 실리콘을 끼웠습니다.<br />TV를 밀어도 하판은 거실장 위에 그대로 있고<br /><b>움직이는 건 위의 상판뿐</b>입니다.</Body>
       <div className="relative -mx-6 mt-9">
         <Slot kind="GIF" what="TV를 밀 때 하판은 그대로, 상판만 움직이는 장면" how="패드 높이에서 옆으로 · 하판과 거실장 경계에 초점 · 삼각대 고정 · 2~3초 왕복 · 주석 자리(위: 상판, 아래: 하판)를 비워 두고 구도 잡기" code="B8" src="/3d/V5_leg_turn.gif" noTag cg capOff className="aspect-[4/3]" />
         {/* 점 위치: 상판 = 다리 바로 앞 상판 앞 모서리(다리와 함께 움직임) · 하판 = 왼쪽 앞 하판 면(움직이지 않음) */}
@@ -428,7 +428,7 @@ export function Grip() {
           <div key={i} className="flex items-center gap-3 rounded-[10px] bg-paper px-5 py-4 text-[16px] text-text [&_b]:font-bold [&_b]:text-ink">{CHECK}<span>{c}</span></div>
         ))}
       </div>
-      <Slot kind="사진" what="하판 바닥 미끄럼 방지 줄" how="하판을 뒤집어 바닥의 줄이 보이게 · 사선 조명으로 질감 · 줄 끝부분까지" code="B2" src="/3d/bottom_strip_macro.jpg" noTag round className="mt-8 aspect-[16/9]" />
+      <Slot kind="사진" what="하판 바닥 미끄럼 방지 실리콘" how="하판을 뒤집어 바닥의 실리콘이 보이게 · 사선 조명으로 질감 · 실리콘 끝부분까지" code="B2" src="/3d/bottom_strip_macro.jpg" noTag round className="mt-8 aspect-[16/9]" />
       <Note>평평한 거실장 위에서 사용해 주세요.</Note>
     </Section>
   )
@@ -733,6 +733,16 @@ export function Point05() {
           <li key={t} className="relative pl-3 text-[13.5px] leading-[1.9] text-sub before:absolute before:left-0 before:top-[10px] before:size-1 before:rounded-full before:bg-sky">{t}</li>
         ))}
       </ul>
+      {/* 11/3 회의: 물세척 — 짧게, 흰 여백에서 따로 한 장 */}
+      <div data-cut aria-hidden className="mt-12 h-0" />
+      <div className="mt-12 text-left">
+        <div className="flex items-start justify-between">
+          <p className="text-[25.5px] font-medium leading-[1.35] tracking-[-0.03em] text-ink">더러워지면<br /><b className="font-extrabold">물로 씻어 쓰세요</b></p>
+          <span className="font-serif text-[16px] italic text-mute">Easy care</span>
+        </div>
+        <WashSteps />
+        <p className="mt-4 text-[15px] leading-[1.75] text-sub">상판과 하판을 떼어 물로 씻고<br />물기를 말린 뒤 다시 끼우면 됩니다.</p>
+      </div>
     </Section>
   )
 }
@@ -769,30 +779,44 @@ export function Fit() {
       </div>
       <Fig><PadSize /></Fig>
       <Body>TV 다리 바닥이 <b>상판(100 × 350mm)</b> 위에<br />올라가는지 확인해 주세요.</Body>
-      <Body className="!mt-3">거실장 위에 <b>하판(500 × 130mm)</b>이<br />밖으로 나오지 않고 다 올라가는지도 봐 주세요.</Body>
+      {/* 11/3 회의: 거실장 앞뒤 폭이 하판(500mm)보다 좁으면 펀딩할 때 폭을 받아 하판을 줄여 보냄 + TV 다리 사이 간격(선택) — 흰 띠에서 따로 한 장 */}
+      <Break h={140} className="mt-10 mb-2" />
+      <Heading lead="거실장 폭이 50cm보다 좁다면">하판 길이를 줄여<br /><b>거실장에 맞춰</b> 보내드립니다</Heading>
+      <Fig><CabinetTrim /></Fig>
+      <Body>하판 길이는 500mm입니다.<br />거실장 앞뒤 폭이 이보다 좁으면<br />펀딩할 때 폭을 적어 주세요.</Body>
+      <div className="mt-7 rounded-[12px] bg-white/60 px-5 py-5 text-left">
+        <p className="text-[15.5px] font-bold text-ink">펀딩할 때 적어 주세요</p>
+        <dl className="mt-3 flex flex-col gap-2.5 text-[15px]">
+          {[['거실장 앞뒤 폭', '50cm보다 좁을 때'], ['TV 다리 사이 간격', '선택']].map(([k, v]) => (
+            <div key={k} className="flex items-baseline justify-between gap-3"><dt className="text-text">{k}</dt><dd className="text-[13.5px] text-mute">{v}</dd></div>
+          ))}
+        </dl>
+      </div>
     </Section>
   )
 }
 
 /* 색상 */
 export function Colors() {
+  // 11/3 회의: 패드는 화이트 한 가지. 아이보리나 모카 인조가죽 시트 1장을 함께 드리고, 상판에 맞춰 잘라 붙임
   const cs: [string, string, string, string][] = [
-    ['화이트', '#FFFFFF', '흰색·밝은 거실장에 깔끔하게', 'white'],
-    ['아이보리', '#F3EDE3', '베이지·밝은 원목에 부드럽게', 'ivory'],
-    ['모카', '#8A6A52', '짙은 원목 거실장에 차분하게', 'mocha'],
+    ['화이트', '#FFFFFF', '기본 그대로, 흰색이나 밝은 거실장에', 'white'],
+    ['아이보리', '#F3EDE3', '시트를 붙이면, 베이지나 밝은 원목에', 'ivory'],
+    ['모카', '#8A6A52', '시트를 붙이면, 짙은 원목 거실장에', 'mocha'],
   ]
   return (
     <Section cap="19_색상" tone="ivory" cg>
-      <Serif>Three colors, one living room</Serif>
-      <div className="mt-3"><Heading lead="거실장 색에 맞춰"><b className="text-mocha">세 가지</b> 컬러</Heading></div>
-      <Body>세 가지 모두 <b>가죽 질감의 시트</b>로 마감했습니다.</Body>
+      <Serif>White, and one more color</Serif>
+      <div className="mt-3"><Heading lead="기본은 화이트">거실장 색에 맞춰<br /><b className="text-mocha">시트 한 장</b>을 더 드립니다</Heading></div>
+      <Body>패드는 화이트로 보내드립니다.<br />아이보리와 모카 중 <b>가죽 질감의 시트</b> 한 장을 골라 주세요.<br />상판 크기에 맞춰 잘라 붙이면 됩니다.</Body>
       {/* 한눈에: 위에서 본 세 색 패드 — 아래 색 이름과 같은 열에 놓임 */}
       <Slot kind="사진" what="세 가지 색 패드를 위에서" how="3D · 화이트 · 아이보리 · 모카 나란히" code="C11-2" src="/3d/color_trio_top.jpg" noTag round className="mt-8 aspect-square" />
       <div className="mt-4 grid grid-cols-3">
         {cs.map(([n, c], i) => (
-          <p key={n} className="flex items-center justify-center gap-2 text-[15px] font-semibold">
-            <motion.i className="size-4 rounded-full border border-[#D5CEC4]" style={{ background: c }}
-              animate={{ scale: [1, 1.25, 1] }} transition={{ duration: 3, times: [0, .15, .3], ease: 'easeInOut', repeat: Infinity, delay: i * 0.4 }} />{n}
+          <p key={n} className="flex flex-col items-center justify-center gap-1 text-[15px] font-semibold">
+            <span className="flex items-center gap-2"><motion.i className="size-4 rounded-full border border-[#D5CEC4]" style={{ background: c }}
+              animate={{ scale: [1, 1.25, 1] }} transition={{ duration: 3, times: [0, .15, .3], ease: 'easeInOut', repeat: Infinity, delay: i * 0.4 }} />{n}</span>
+            <span className="text-[12.5px] font-medium text-mute">{i ? '시트 선택' : '기본'}</span>
           </p>
         ))}
       </div>
@@ -962,9 +986,10 @@ export function Maker() {
 export function QnA() {
   const qa: [string, ReactNode][] = [
     ['우리 집 TV에 맞나요?', <>다리가 좌우로 나뉜 TV라면 쓸 수 있습니다.<br />두 패드를 다리 간격에 맞춰 놓으면 됩니다.</>],
+    ['거실장 폭이 하판보다 좁으면요?', <>하판 길이는 500mm입니다.<br />거실장 앞뒤 폭이 이보다 좁으면 펀딩할 때 적어 주세요.<br />그 길이에 맞춰 하판을 줄여 보내드립니다.</>],
     ['가운데 스탠드 하나로 서는 TV도 되나요?', <>2-POINT는 두 다리를 각각 받치는 구조라<br />다리가 좌우로 나뉜 TV에 맞춰 만들었습니다.</>],
     ['흔들리거나 넘어지지 않나요?', <>두 다리를 각각 받치기 때문에<br />TV는 원래 서 있던 그대로 섭니다.<br />평평한 거실장 위에서 써주세요.</>],
-    ['거실장이 긁히거나 패드가 밀리지 않나요?', <>하판 바닥의 미끄럼 방지 줄이 거실장을 붙잡아<br />패드는 그대로 있고 위의 상판만 움직입니다.</>],
+    ['거실장이 긁히거나 패드가 밀리지 않나요?', <>하판 바닥의 미끄럼 방지 실리콘이 거실장을 붙잡아<br />패드는 그대로 있고 위의 상판만 움직입니다.</>],
     ['베어링 없이 어떻게 돌아가나요?', <>마찰이 낮은 PTFE 위를 상판이 같은 원을 따라 미끄러져<br />TV는 제자리에서 방향만 바뀝니다.</>],
     ['돌릴 때 소리가 나지 않나요?', <>기름이나 베어링 없이 소재끼리 미끄러지도록 만들어<br />조용하게 돌아갑니다.</>],
     ['TV가 높아지지 않나요?', <>패드 두께 15mm만큼만 높아집니다.<br />사운드바나 거실장 위 소품은 그대로 두셔도 됩니다.</>],
@@ -991,10 +1016,10 @@ export function QnA() {
 /* 제품 상세정보 (어두운 표) */
 export function Spec() {
   const spec: [string, ReactNode][] = [
-    ['제품명', '다큐 턴패드 2-POINT'], ['구성', '상판 2, 하판 2, 연결 핀 2'],
+    ['제품명', '다큐 턴패드 2-POINT'], ['구성', '상판 2, 하판 2, 연결 핀 2, 인조가죽 시트 1'],
     ['상판', <>350 × 100 × 10mm<br />UHMWPE, 인조가죽 시트지 마감</>],
-    ['하판', <>500 × 130 × 5mm · 곡선 홈<br />PTFE, 바닥 미끄럼 방지 줄</>],
-    ['연결 핀', 'Ø10 × 13mm · UHMWPE'], ['두께', '15mm (상판 10mm + 하판 5mm)'], ['색상', '화이트, 아이보리, 모카'],
+    ['하판', <>500 × 130 × 5mm · 곡선 홈<br />PTFE, 바닥 미끄럼 방지 실리콘<br />거실장 폭에 맞춰 길이를 줄여 드림</>],
+    ['연결 핀', 'Ø10 × 13mm · UHMWPE'], ['두께', '15mm (상판 10mm + 하판 5mm)'], ['색상', <>화이트<br />함께 드리는 인조가죽 시트: 아이보리, 모카 중 1장</>],
     ['맞는 TV', <>다리가 좌우로 분리된 TV</>],
     ['디자인권', <>등록 제30-1267775호<br />출원 30-2026-0034869 (2-POINT)</>], ['제조', '국내 CNC 가공'], ['판매원', '비티엠이앤씨 (브랜드 DACU)'],
   ]
@@ -1003,12 +1028,13 @@ export function Spec() {
     ['교환·환불', <>배송 완료일로부터 7일 안에<br />단순 변심 환불을 신청하실 수 있습니다.<br />아래의 경우 단순 변심에 의한 반품·환불이 어려울 수 있습니다.
       <ul className="mt-1.5 flex flex-col gap-1">{[
         '구성품(상판 2, 하판 2, 연결 핀 2) 중 일부가 빠진 경우',
-        '사용으로 인해 상판 시트지에 오염·찢김·들뜸이 생기거나, 하판 바닥의 미끄럼 방지 줄이 분리·손상된 경우',
+        '사용으로 인해 상판 시트지에 오염·찢김·들뜸이 생기거나, 하판 바닥의 미끄럼 방지 실리콘이 분리·손상된 경우',
+        '거실장 폭에 맞춰 하판 길이를 줄여 보내드린 경우',
         '안내된 사용 환경(평평한 거실장 위, 다리가 좌우로 분리된 TV) 외의 용도로 사용하다 파손된 경우',
       ].map(t => <li key={t} className="flex gap-1.5"><span>·</span><span>{t}</span></li>)}</ul>
       <span className="mt-1.5 block">소재 특성상 표면에 미세한 결이 보일 수 있으며,<br />이는 제품 불량이 아닙니다.</span></>],
     ['A/S', <>기간 제한 없이 무상 A/S를 제공합니다.<br />정상적인 사용 중 생긴 하자(파손, 변형, 시트지 들뜸 등)는 기간과 관계없이 무상으로 부품 교체 또는 제품 교환해 드립니다.<br />사용자 부주의나 안내된 사용 환경 외 사용으로 인한 손상은 유상으로 처리될 수 있습니다.<br />A/S 왕복 배송비는 서포터님 부담입니다. 단, 수령 직후 발견한 초기 불량이나 오배송은 메이커가 부담합니다.</>],
-    ['A/S 접수', <>비티엠이앤씨 고객센터 <b className="font-semibold text-white">061-333-8386</b><br />접수 시 제품 사진이나 영상을 요청드릴 수 있습니다.</>],
+    ['A/S 접수', <>비티엠이앤씨 고객센터 <b className="font-semibold text-white">061-333-8386</b><br />수원 사무실 <b className="font-semibold text-white">031-205-8386</b><br />접수 시 제품 사진이나 영상을 요청드릴 수 있습니다.</>],
     ['사용 주의', <>평평한 곳에서 쓰고, 무리하게 빠르게 돌리지 말고,<br />케이블 여유 길이를 확인해 주세요.</>],
   ]
   const table = (rows: [string, ReactNode][]) => (
