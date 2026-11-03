@@ -819,8 +819,8 @@ export function Colors() {
         <svg viewBox="0 0 16 16" className="size-[15px]" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"><rect x="2" y="6" width="12" height="8" rx="1" /><path d="M1.5 6h13M8 6v8M8 6C6.5 3 3.5 3.5 4.5 5.2 5.2 6 8 6 8 6zm0 0c1.5-3 4.5-2.5 3.5-.8C10.8 6 8 6 8 6z" /></svg>
         펀딩하신 모든 분께
       </motion.p>
-      <div className="mt-5"><Heading lead="패드는 화이트, 그리고 선물 하나">인조가죽 시트<br /><b className="text-mocha">한 장 더</b> 드립니다</Heading></div>
-      <Body>2-POINT는 화이트로 보내드립니다.<br />여기에 아이보리나 모카 <b>인조가죽 시트</b> 한 장을<br />선물로 함께 넣어 드려요.<br />상판 크기에 맞춰 잘라 붙이면 거실장 색에 맞출 수 있습니다.</Body>
+      <div className="mt-5"><Heading lead="작은 선물을 준비했어요">인조가죽 시트<br /><b className="text-mocha">한 장 더</b> 드립니다</Heading></div>
+      <Body><b>아이보리</b>와 <b>모카</b> 중 하나를 골라 주세요.<br />상판 크기에 맞춰 잘라 붙이면<br />거실장 색에 맞춰 바꿀 수 있습니다.</Body>
       {/* 한눈에: 위에서 본 세 색 패드 — 아래 색 이름과 같은 열에 놓임 */}
       <Slot kind="사진" what="세 가지 색 패드를 위에서" how="3D · 화이트 · 아이보리 · 모카 나란히" code="C11-2" src="/3d/color_trio_top.jpg" noTag round className="mt-8 aspect-square" />
       <div className="mt-4 grid grid-cols-3">
