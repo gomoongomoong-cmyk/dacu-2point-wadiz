@@ -708,8 +708,13 @@ export function Point05() {
           </div>
         ))}
       </div>
-      <div data-cut aria-hidden className="mt-9 h-0" />
-      <div className="mt-9 pt-4 text-left">
+      <ul className="mt-9 border-t border-line pt-4 text-left">
+        {['평평한 거실장 위에서 사용해 주세요.', 'TV를 들어 올릴 때는 두 사람이 함께해 주세요.', '돌리기 전 전원·HDMI 케이블에 여유가 있는지 확인해 주세요.'].map(t => (
+          <li key={t} className="relative pl-3 text-[13.5px] leading-[1.9] text-sub before:absolute before:left-0 before:top-[10px] before:size-1 before:rounded-full before:bg-sky">{t}</li>
+        ))}
+      </ul>
+      <div data-cut aria-hidden className="mt-12 h-0" />
+      <div className="-mx-6 bg-[#F3ECE3] px-6 py-16 text-left">{/* 11/3: 설치·두께·물세척 세 장이 한데 붙어 보여 두께만 단색 베이지 띠로 구분 */}
         <div className="flex items-start justify-between">
           <p className="text-[25.5px] font-medium leading-[1.35] tracking-[-0.03em] text-ink">거실장 위에서<br /><b className="font-extrabold">드러나지 않는 두께</b></p>
           <span className="font-serif text-[16px] italic text-mute">Low profile</span>
@@ -728,14 +733,9 @@ export function Point05() {
         <CgCap className="!mt-1.5" />
         <p className="mt-4 text-[15px] leading-[1.75] text-sub">상판 10mm와 하판 5mm를 합친 두께입니다.<br />TV는 그만큼만 높아지고<br /><b className="font-semibold text-ink">사운드바·선 정리는 그대로</b>입니다.</p>
       </div>
-      <ul className="mt-6 border-t border-line pt-4 text-left">
-        {['평평한 거실장 위에서 사용해 주세요.', 'TV를 들어 올릴 때는 두 사람이 함께해 주세요.', '돌리기 전 전원·HDMI 케이블에 여유가 있는지 확인해 주세요.'].map(t => (
-          <li key={t} className="relative pl-3 text-[13.5px] leading-[1.9] text-sub before:absolute before:left-0 before:top-[10px] before:size-1 before:rounded-full before:bg-sky">{t}</li>
-        ))}
-      </ul>
-      {/* 11/3 회의: 물세척 — 짧게, 흰 여백에서 따로 한 장 */}
-      <div data-cut aria-hidden className="mt-12 h-0" />
-      <div className="mt-12 text-left">
+      {/* 11/3 회의: 물세척 — 짧게, 따로 한 장 */}
+      <div data-cut aria-hidden className="h-0" />
+      <div className="mt-16 text-left">
         <div className="flex items-start justify-between">
           <p className="text-[25.5px] font-medium leading-[1.35] tracking-[-0.03em] text-ink">더러워지면<br /><b className="font-extrabold">물로 씻어 쓰세요</b></p>
           <span className="font-serif text-[16px] italic text-mute">Easy care</span>
